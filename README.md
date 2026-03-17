@@ -1,189 +1,108 @@
 # MedTech Virtual Laboratory
 
-A modern, interactive virtual laboratory platform for STEM education at SMU (Mediterranean Institution of Technology). Built with Next.js, TypeScript, and Tailwind CSS, this platform provides students with engaging physics simulations and educational content.
+Interactive STEM virtual lab platform for SMU (Mediterranean Institution of Technology), built with Next.js App Router, TypeScript, and Tailwind CSS.
 
-## 🔬 Features
+![Next.js](https://img.shields.io/badge/Next.js-15.4.7-000000?logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-19.1.0-61DAFB?logo=react&logoColor=000)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.2.1-06B6D4?logo=tailwindcss&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-9.x-4B32C3?logo=eslint&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Active-success)
 
-- **Interactive Physics Simulations**: Powered by PhET Interactive Simulations
-- **Office 365 SSO Authentication**: Secure login using SMU student/faculty accounts
-- **Role-Based Access**: Different features for students, faculty, and guests
-- **Comprehensive Lab Collection**: 3+ virtual laboratories covering mechanics, waves, electricity, thermodynamics, and optics
-- **User Dashboard**: Personalized dashboard with progress tracking and quick access
-- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
-- **Search & Filter**: Advanced filtering by category, difficulty, and topics
-- **Progress Tracking**: Monitor learning progress and lab completion
-- **Educational Resources**: Detailed lab instructions and learning objectives
-- **Evaluation System**: Built-in feedback and assessment tools
-- **Secure Authentication**: Microsoft Azure AD integration for enterprise security
+## Overview
 
-## 🚀 Getting Started
+This project delivers a modern virtual physics lab experience with:
+
+- dynamic lab pages and assessments
+- interactive graph/table input components
+- responsive pages (`/`, `/about`, `/labs`, `/contact`, `/dashboard`, `/grades`, `/evaluation`)
+- contact form submission via API route (`/api/contact`)
+
+## Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **UI**: React 19 + Tailwind CSS v4
+- **Language**: TypeScript
+- **Icons**: Font Awesome
+- **Math Rendering**: KaTeX + `react-katex`
+- **Email**: Nodemailer (contact form API)
+
+## Project Structure
+
+```text
+src/
+    app/
+        api/contact/route.ts      # Contact email endpoint
+        page.tsx                  # Home
+        about/page.tsx
+        labs/page.tsx
+        labs/[id]/page.tsx        # Lab simulation + assessment
+        contact/page.tsx
+        dashboard/page.tsx
+        grades/page.tsx
+        evaluation/page.tsx
+        layout.tsx
+        globals.css
+    components/
+        Navigation.tsx
+        Footer.tsx
+        QuestionComponent.tsx
+        MathText.tsx
+        DynamicIcon.tsx
+        UserMenu.tsx
+    lib/
+        labs.json                 # Lab content + metadata
+        data.ts                   # Lab data loader/helpers
+        types.ts
+```
+
+## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ (recommended)
-- npm, yarn, pnpm, or bun
+- Node.js 18+
+- npm
 
-### Installation
-
-1. Clone the repository:
-
-```bash
-git clone <repository-url>
-cd medtech-vl-web
-```
-
-2. Install dependencies:
+### Install & Run
 
 ```bash
 npm install
-# or
-yarn install
-# or
-pnpm install
-# or
-bun install
-```
-
-3. Set up authentication:
-
-```bash
-# Copy the environment variables template
-cp .env.local.example .env.local
-
-# Edit .env.local and add your Azure AD credentials
-# See AZURE_AD_SETUP.md for detailed instructions
-```
-
-4. Run the development server:
-
-```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open `http://localhost:3000`.
 
-## 📁 Project Structure
+## Environment Variables
 
-```
-src/
-├── app/                    # Next.js App Router pages
-│   ├── about/             # About page
-│   ├── contact/           # Contact page
-│   ├── evaluation/        # Lab evaluation system
-│   ├── labs/              # Virtual laboratories
-│   │   └── [id]/         # Dynamic lab pages
-│   ├── globals.css        # Global styles with Tailwind CSS
-│   ├── layout.tsx         # Root layout component
-│   └── page.tsx           # Home page
-├── components/            # Reusable React components
-│   ├── Footer.tsx         # Site footer
-│   └── Navigation.tsx     # Navigation bar
-└── lib/                   # Utilities and data
-    ├── data.ts            # Lab data and categories
-    └── types.ts           # TypeScript type definitions
+Create `.env.local` and configure SMTP for contact form delivery:
+
+```bash
+SMTP_HOST=
+SMTP_PORT=587
+SMTP_USER=
+SMTP_PASS=
+SMTP_FROM=
 ```
 
-## 🧪 Virtual Laboratories
+The contact API currently sends submissions to:
 
-The platform includes the following virtual laboratories:
+- `hamdaouijesser2004@gmail.com`
 
-### Mechanics
+## Scripts
 
-- **Collision Lab**: Explore elastic and inelastic collisions
-- **Projectile Motion**: Investigate projectile trajectories
-- **Pendulum Lab**: Study oscillatory motion
+- `npm run dev` — start development server (Turbopack)
+- `npm run build` — production build
+- `npm run start` — run production server
+- `npm run lint` — run ESLint
 
-### Waves & Sound
+## Notes
 
-- **Wave on a String**: Explore wave properties
-- **Sound**: Investigate sound wave characteristics
+- Lab content is maintained in `src/lib/labs.json`.
+- Lab thumbnails are served from `public/images` and wired through `thumbnail` fields.
+- If you introduce additional simulations locally (instead of external links), prefer isolated routes/components per lab for maintainability.
 
-### Electricity & Magnetism
+## Contact
 
-- **Circuit Construction Kit**: Build and analyze circuits
-- **Charges and Fields**: Visualize electric fields
-
-### Thermodynamics
-
-- **Energy Forms and Changes**: Study energy transformations
-
-### Optics
-
-- **Geometric Optics**: Study light behavior through lenses
-- **Bending Light**: Explore refraction and Snell's law
-
-## 🎨 Design System
-
-### Color Palette
-
-- **Primary**: #057999 (Teal/Cyan)
-- **Secondary**: Various complementary colors for categories
-- **Neutral**: Gray scale for text and backgrounds
-
-### Typography
-
-- **Font Family**: Heebo (Google Fonts)
-- **Weights**: 300, 400, 500, 600, 700
-
-### Components
-
-- Built with Tailwind CSS utility classes
-- Responsive design patterns
-- Consistent spacing and typography scale
-
-## 🛠️ Technology Stack
-
-- **Framework**: Next.js 15 with App Router
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS v4
-- **Fonts**: Google Fonts (Heebo)
-- **Simulations**: PhET Interactive Simulations (embedded)
-- **Development**: ESLint, PostCSS
-
-## 🔧 Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
-
-## 📚 Educational Objectives
-
-This platform is designed to:
-
-1. **Enhance Understanding**: Make abstract physics concepts tangible through visualization
-2. **Promote Inquiry**: Encourage students to ask questions and explore
-3. **Support Learning**: Provide structured learning paths and objectives
-4. **Enable Accessibility**: Make quality physics education available anytime, anywhere
-5. **Foster Engagement**: Create interactive and engaging learning experiences
-
-## 🏫 About SMU
-
-This platform is developed for SMU (Mediterranean Institution of Technology), part of South Mediterranean University in Tunisia, dedicated to providing innovative educational technology solutions for STEM education.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 📞 Support
-
-For technical support or questions about the platform:
-
-- Email: support@medtech-vl.edu
-- Visit: [Contact Page](http://localhost:3000/contact)
-
-## 🙏 Acknowledgments
-
-- [PhET Interactive Simulations](https://phet.colorado.edu/) for providing high-quality physics simulations
-- [Next.js](https://nextjs.org/) for the excellent React framework
-- [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
+- General: `rim.gharbi@medtech.tn`
+- Technical: `jesser.hamdaoui@medtech.tn`
+- Academic: `rim.gouia@medtech.tn`
