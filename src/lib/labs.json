@@ -1,0 +1,746 @@
+{
+  "categories": [
+    {
+      "id": "mechanics",
+      "name": "Mechanics",
+      "description": "Classical mechanics, motion, forces, and collisions",
+      "icon": "Physics"
+    },
+    {
+      "id": "waves",
+      "name": "Waves & Optics",
+      "description": "Wave propagation, resonance, standing waves, and optics",
+      "icon": "Music"
+    },
+    {
+      "id": "electricity",
+      "name": "Electricity & Magnetism",
+      "description": "Electrostatics, electric forces, fields, and charge interactions",
+      "icon": "Lightning"
+    }
+  ],
+  "labs": [
+    {
+      "id": "standing-waves",
+      "title": "Standing Waves",
+      "labTitle": "LAB 2.: Standing Waves",
+      "description": "Study standing waves on a cord produced by the interference of two opposite traveling waves. Explore resonant vibration modes, fundamental frequencies, and the locations of nodes and antinodes.",
+      "category": "waves",
+      "difficulty": "Intermediate",
+      "duration": "90 min",
+      "topics": [
+        "Standing Waves",
+        "Resonance",
+        "Frequency",
+        "Nodes",
+        "Antinodes",
+        "Harmonics",
+        "Wave Propagation"
+      ],
+      "tags": [
+        "Standing Waves",
+        "Resonance",
+        "Frequencies",
+        "Nodes",
+        "Antinodes",
+        "Wave Propagation",
+        "Harmonic Wavelength"
+      ],
+      "phetUrl": "https://medtech-standing-wave-vl-beta.vercel.app/",
+      "thumbnail": "/images/thumbnail_standing_wave.jpeg",
+      "objectives": [
+        "Measure wave propagation velocity on a cord",
+        "Determine resonant frequencies and harmonics",
+        "Identify and compare positions of nodes and antinodes",
+        "Analyze effects of tension and damping on standing waves"
+      ],
+      "metadata": {
+        "sourceTitle": "LAB 2.: Standing Waves",
+        "course": "PHYS 253 - Waves, Optics & Quantum Physics",
+        "institution": "SMU, MedTech, Mediterranean Institute of Technology",
+        "term": "Spring 2024",
+        "academicYear": "2021/2022"
+      },
+      "questions": [
+        {
+          "id": "standing-waves-q1",
+          "labId": "standing-waves",
+          "type": "text",
+          "title": "Measure Wave Propagation Velocity",
+          "description": "Measure the velocity of wave propagation on the cord.",
+          "instruction": "Report your measured value and show the calculation steps used.",
+          "responseFormat": "Open-ended / Calculation",
+          "sourceLabel": "Exercise 1",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "standing-waves-q2",
+          "labId": "standing-waves",
+          "type": "text",
+          "title": "Determine Fundamental Resonant Frequency",
+          "description": "Determine the fundamental resonant frequency related to cord vibration.",
+          "instruction": "Provide the formula used and the final computed frequency.",
+          "responseFormat": "Open-ended / Calculation",
+          "sourceLabel": "Exercise 2",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "standing-waves-q3",
+          "labId": "standing-waves",
+          "type": "text",
+          "title": "Fundamental Mode Screenshot",
+          "description": "Set frequency to the fundamental mode, restart, wait ~15s, and capture the vibration.",
+          "instruction": "Attach/submit your screenshot reference and briefly describe the observed pattern.",
+          "responseFormat": "Screenshot / Image Upload",
+          "sourceLabel": "Exercise 3",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "standing-waves-q4",
+          "labId": "standing-waves",
+          "type": "text",
+          "title": "Nodes and Antinodes (Fundamental)",
+          "description": "Measure positions of nodes and antinodes for the fundamental mode.",
+          "instruction": "List measured positions and include units.",
+          "responseFormat": "Open-ended / Measurement",
+          "sourceLabel": "Exercise 4",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "standing-waves-q5",
+          "labId": "standing-waves",
+          "type": "text",
+          "title": "Second Harmonic Frequency",
+          "description": "Calculate the frequency of the second harmonic.",
+          "instruction": "Show derivation from the fundamental mode.",
+          "responseFormat": "Open-ended / Calculation",
+          "sourceLabel": "Exercise 5",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "standing-waves-q6",
+          "labId": "standing-waves",
+          "type": "text",
+          "title": "Second Harmonic Screenshot",
+          "description": "Set frequency to second harmonic, restart, wait ~15s, and capture vibration.",
+          "instruction": "Attach/submit screenshot reference and annotate key features.",
+          "responseFormat": "Screenshot / Image Upload",
+          "sourceLabel": "Exercise 6",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "standing-waves-q7",
+          "labId": "standing-waves",
+          "type": "text",
+          "title": "Nodes and Antinodes (Second Harmonic)",
+          "description": "Measure positions of nodes and antinodes for second harmonic.",
+          "instruction": "Provide measured values with units.",
+          "responseFormat": "Open-ended / Measurement",
+          "sourceLabel": "Exercise 7",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "standing-waves-q8",
+          "labId": "standing-waves",
+          "type": "text",
+          "title": "Harmonic Identification at 0.24 Hz",
+          "description": "Set frequency to 0.24 Hz, restart, wait ~15s, screenshot vibration, and identify harmonic order.",
+          "instruction": "Submit screenshot reference and explain how you identified the harmonic.",
+          "responseFormat": "Screenshot & Open-ended",
+          "sourceLabel": "Exercise 8",
+          "points": 6,
+          "required": true
+        },
+        {
+          "id": "standing-waves-q9",
+          "labId": "standing-waves",
+          "type": "text",
+          "title": "Nodes and Antinodes (0.24 Hz)",
+          "description": "Measure positions of nodes and antinodes at 0.24 Hz.",
+          "instruction": "Provide full measured table/list with units.",
+          "responseFormat": "Open-ended / Measurement",
+          "sourceLabel": "Exercise 9",
+          "points": 4,
+          "required": true
+        },
+        {
+          "id": "standing-waves-q10",
+          "labId": "standing-waves",
+          "type": "text",
+          "title": "6th Harmonic Schematic",
+          "description": "Draw a schematic of the cord vibrating at the 6th harmonic.",
+          "instruction": "Attach drawing reference and explain marked nodes/antinodes.",
+          "responseFormat": "Drawing / Image Upload",
+          "sourceLabel": "Exercise 10",
+          "points": 6,
+          "required": true
+        },
+        {
+          "id": "standing-waves-q11",
+          "labId": "standing-waves",
+          "type": "text",
+          "title": "Calculated Node Positions at 6th Harmonic",
+          "description": "Determine node positions by calculation at the 6th harmonic.",
+          "instruction": "Show equations and all computed positions.",
+          "responseFormat": "Open-ended / Calculation",
+          "sourceLabel": "Exercise 11",
+          "points": 6,
+          "required": true
+        },
+        {
+          "id": "standing-waves-q12",
+          "labId": "standing-waves",
+          "type": "text",
+          "title": "6th Harmonic Screenshot",
+          "description": "Set frequency to 6th harmonic, restart, wait ~15s, and capture vibration.",
+          "instruction": "Submit screenshot reference and short interpretation.",
+          "responseFormat": "Screenshot / Image Upload",
+          "sourceLabel": "Exercise 12",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "standing-waves-q13",
+          "labId": "standing-waves",
+          "type": "text",
+          "title": "Measured vs Calculated Node/Antinode Positions",
+          "description": "Measure positions of nodes/antinodes and compare with calculated values.",
+          "instruction": "Present comparison and discuss discrepancies.",
+          "responseFormat": "Open-ended / Measurement & Comparison",
+          "sourceLabel": "Exercise 13",
+          "points": 7,
+          "required": true
+        },
+        {
+          "id": "standing-waves-q14",
+          "labId": "standing-waves",
+          "type": "text",
+          "title": "Effect of High Tension on Wave Speed",
+          "description": "Set tension to High and measure wave speed again. Compare with previous value.",
+          "instruction": "State whether values match and justify physically.",
+          "responseFormat": "Open-ended / Measurement & Explanation",
+          "sourceLabel": "Exercise 14",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "standing-waves-q15",
+          "labId": "standing-waves",
+          "type": "text",
+          "title": "Effect of Tension on Resonant Frequencies",
+          "description": "Determine whether resonant frequencies are the same under Low and High tension.",
+          "instruction": "Explain your reasoning using observations and formulas.",
+          "responseFormat": "Open-ended / Explanation",
+          "sourceLabel": "Exercise 15",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "standing-waves-q16",
+          "labId": "standing-waves",
+          "type": "text",
+          "title": "Effect of Damping (Lots)",
+          "description": "Set damping level to Lots. Determine whether standing waves are still observable.",
+          "instruction": "Describe observed behavior and explain why.",
+          "responseFormat": "Open-ended / Explanation",
+          "sourceLabel": "Exercise 16",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "standing-waves-q17",
+          "labId": "standing-waves",
+          "type": "text",
+          "title": "Conclusion",
+          "description": "Summarize conclusions from the standing waves investigation.",
+          "instruction": "Provide a concise conclusion covering resonance, harmonics, and damping/tension impacts.",
+          "responseFormat": "Open-ended",
+          "sourceLabel": "Conclusion",
+          "points": 7,
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "coulombs-law",
+      "title": "Coulomb's Law",
+      "labTitle": "Lab1: Coulomb's Law",
+      "description": "Investigate Coulomb's law by observing electrostatic attraction/repulsion and the dependence of force on charges and distance.",
+      "category": "electricity",
+      "difficulty": "Intermediate",
+      "duration": "90 min",
+      "topics": [
+        "Electrostatic Force",
+        "Electric Charges",
+        "Inverse Square Law",
+        "Coulomb's Constant",
+        "Data Analysis"
+      ],
+      "tags": [
+        "Coulomb's Law",
+        "Electrostatic Force",
+        "Electric Charges",
+        "Inverse Square Law",
+        "Coulomb's Constant"
+      ],
+      "phetUrl": "https://medtech-vl-coulombs-law.vercel.app/",
+      "thumbnail": "/images/thumbnail_coulomb.jpeg",
+      "objectives": [
+        "Verify proportionality of electrostatic force with product of charges",
+        "Verify inverse-square dependence with distance",
+        "Estimate Coulomb's constant from experimental slope",
+        "Compare measured and theoretical Coulomb constants"
+      ],
+      "metadata": {
+        "sourceTitle": "Lab1: Coulomb's Law",
+        "level": "Sophomore",
+        "institution": "SMU, MedTech, Mediterranean Institute of Technology",
+        "term": "Fall 2023 / Fall 2024"
+      },
+      "questions": [
+        {
+          "id": "coulomb-q1",
+          "labId": "coulombs-law",
+          "type": "table",
+          "title": "Table 1: Fixed Distance, Changing Charge",
+          "description": "Run experiment IV.1 and complete data results table.",
+          "instruction": "Record all measured values for fixed distance while varying charge.",
+          "responseFormat": "Table filling",
+          "sourceLabel": "IV.1",
+          "points": 8,
+          "required": true,
+          "tableConfig": {
+            "columns": ["q1", "q2", "r", "F21"],
+            "rows": 6,
+            "headers": ["q1 (C)", "q2 (C)", "Distance r (m)", "Force F21 (N)"]
+          }
+        },
+        {
+          "id": "coulomb-q2",
+          "labId": "coulombs-law",
+          "type": "text",
+          "title": "Effect of Doubling $q_2$",
+          "description": "What happens to $F_{21}$ when $q_2$ is doubled while $q_1$ is constant?",
+          "instruction": "Select answer and justify with data/theory.",
+          "responseFormat": "Multiple Choice / Explanation",
+          "sourceLabel": "IV.2.1",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "coulomb-q3",
+          "labId": "coulombs-law",
+          "type": "text",
+          "title": "Effect of Reducing $q_1$ by Factor 3",
+          "description": "If $q_2$ is constant and $q_1$ is reduced by factor 3, what happens to $F_{21}$?",
+          "instruction": "Provide justified conclusion from data.",
+          "responseFormat": "Multiple Choice / Explanation",
+          "sourceLabel": "IV.2.2",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "coulomb-q4",
+          "labId": "coulombs-law",
+          "type": "table",
+          "title": "Table 2: Fixed Charge, Changing Distance",
+          "description": "Run experiment V.1 and complete data results table.",
+          "instruction": "Record values while varying distance with fixed charges.",
+          "responseFormat": "Table filling",
+          "sourceLabel": "V.1",
+          "points": 8,
+          "required": true,
+          "tableConfig": {
+            "columns": ["q1", "q2", "r", "1_over_r2", "F12"],
+            "rows": 6,
+            "headers": [
+              "$q_1$ (C)",
+              "$q_2$ (C)",
+              "Distance $r$ (m)",
+              "$1/r^2$ ($m^{-2}$)",
+              "Force $F_{12}$ (N)"
+            ]
+          }
+        },
+        {
+          "id": "coulomb-q5",
+          "labId": "coulombs-law",
+          "type": "text",
+          "title": "$F_e$ vs Distance Relationship",
+          "description": "Describe the relationship between electrostatic force $F_e$ and distance $r$.",
+          "instruction": "Support answer using Table 2 trends.",
+          "responseFormat": "Multiple Choice / Checkbox",
+          "sourceLabel": "V.2.1",
+          "points": 4,
+          "required": true
+        },
+        {
+          "id": "coulomb-q6",
+          "labId": "coulombs-law",
+          "type": "plot",
+          "title": "Graph: $r$ vs $F_{12}$",
+          "description": "Plot points $(X=r, Y=F_{12})$, add legend, and comment graph.",
+          "instruction": "Use Table 2 columns 4 and 6 values.",
+          "responseFormat": "Graphing / Open-ended",
+          "sourceLabel": "V.2.2",
+          "points": 6,
+          "required": true,
+          "plotConfig": {
+            "xLabel": "$r$ (m)",
+            "yLabel": "$F_{12}$ (N)",
+            "title": "Electrostatic Force vs Distance"
+          }
+        },
+        {
+          "id": "coulomb-q7",
+          "labId": "coulombs-law",
+          "type": "plot",
+          "title": "Graph: $1/r^2$ vs $F_{12}$",
+          "description": "Plot points $(X=1/r^2, Y=F_{12})$, add legend, and comment graph.",
+          "instruction": "Use Table 2 columns 5 and 6 values.",
+          "responseFormat": "Graphing / Open-ended",
+          "sourceLabel": "V.2.3",
+          "points": 6,
+          "required": true,
+          "plotConfig": {
+            "xLabel": "$1/r^2$ ($m^{-2}$)",
+            "yLabel": "$F_{12}$ (N)",
+            "title": "Electrostatic Force vs Inverse-Square Distance"
+          }
+        },
+        {
+          "id": "coulomb-q8",
+          "labId": "coulombs-law",
+          "type": "text",
+          "title": "Slope and Coulomb Constant",
+          "description": "Measure the slope of the curve and deduce Coulomb constant $K_c$.",
+          "instruction": "Show method and final value.",
+          "responseFormat": "Open-ended / Calculation",
+          "sourceLabel": "V.2.4",
+          "points": 7,
+          "required": true
+        },
+        {
+          "id": "coulomb-q9",
+          "labId": "coulombs-law",
+          "type": "text",
+          "title": "$k_{meas}$ vs $k_{theo}$ Comparison",
+          "description": "Compare experimental Coulomb constant with theoretical value and compute percent error.",
+          "instruction": "Provide numerical comparison and interpretation.",
+          "responseFormat": "Open-ended / Calculation",
+          "sourceLabel": "V.2.5",
+          "points": 7,
+          "required": true
+        },
+        {
+          "id": "coulomb-q10",
+          "labId": "coulombs-law",
+          "type": "text",
+          "title": "Conclusion",
+          "description": "What did you learn from studying Coulomb's Law?",
+          "instruction": "Include: attractive/repulsive behavior, effect of distance, effect of charge, and Newton's third law.",
+          "responseFormat": "Open-ended / Explanation",
+          "sourceLabel": "Conclusion",
+          "points": 8,
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "laws-of-collisions",
+      "title": "Laws of Collisions",
+      "labTitle": "LAB 4. Laws of collisions.",
+      "description": "Explore conservation of momentum and mechanical energy in elastic and inelastic collisions using two carts on a frictionless horizontal track.",
+      "category": "mechanics",
+      "difficulty": "Beginner",
+      "duration": "90 min",
+      "topics": [
+        "Collisions",
+        "Conservation of Momentum",
+        "Kinetic Energy",
+        "Elastic Collision",
+        "Inelastic Collision",
+        "Velocity"
+      ],
+      "tags": [
+        "Collisions",
+        "Conservation of Momentum",
+        "Kinetic Energy",
+        "Elastic Collision",
+        "Inelastic Collision",
+        "Velocity"
+      ],
+      "phetUrl": "https://medtech-vl-collision.vercel.app/",
+      "thumbnail": "/images/thumbnail_collision.jpeg",
+      "objectives": [
+        "Verify momentum conservation in elastic and inelastic collisions",
+        "Compare measured post-collision velocities with theoretical formulas",
+        "Analyze graphical relationships between initial and final velocities",
+        "Compare measured and predicted collision ratios"
+      ],
+      "metadata": {
+        "sourceTitle": "LAB 4. Laws of collisions.",
+        "course": "PHYS 151 LABS / MEDTECH PHYSICS LABS",
+        "level": "Freshman",
+        "institution": "SMU, MedTech"
+      },
+      "questions": [
+        {
+          "id": "collision-q1",
+          "labId": "laws-of-collisions",
+          "type": "table",
+          "title": "Elastic Test: $m_1=m_2=1\\,kg$, $v_2=0$, $v_1=20$",
+          "description": "Run elastic test with specified values and fill the table.",
+          "instruction": "Record pre/post-collision values and calculated quantities.",
+          "responseFormat": "Table filling",
+          "sourceLabel": "I.1",
+          "points": 6,
+          "required": true,
+          "tableConfig": {
+            "columns": ["m1", "m2", "v1", "v2", "v1_prime", "v2_prime"],
+            "rows": 5,
+            "headers": [
+              "$m_1$ (kg)",
+              "$m_2$ (kg)",
+              "$v_1$ (m/s)",
+              "$v_2$ (m/s)",
+              "$v_1'$ (m/s)",
+              "$v_2'$ (m/s)"
+            ]
+          }
+        },
+        {
+          "id": "collision-q2",
+          "labId": "laws-of-collisions",
+          "type": "table",
+          "title": "Elastic Test: $m_1 = 2m_2 = 2\\,kg$, $v_2 = 0$, $v_1 = 20$",
+          "description": "Run elastic test with second mass configuration and fill table.",
+          "instruction": "Record complete dataset and compare with previous run.",
+          "responseFormat": "Table filling",
+          "sourceLabel": "I.2",
+          "points": 6,
+          "required": true,
+          "tableConfig": {
+            "columns": ["m1", "m2", "v1", "v2", "v1_prime", "v2_prime"],
+            "rows": 5,
+            "headers": [
+              "$m_1$ (kg)",
+              "$m_2$ (kg)",
+              "$v_1$ (m/s)",
+              "$v_2$ (m/s)",
+              "$v_1'$ (m/s)",
+              "$v_2'$ (m/s)"
+            ]
+          }
+        },
+        {
+          "id": "collision-q3",
+          "labId": "laws-of-collisions",
+          "type": "text",
+          "title": "Elastic Formula Agreement",
+          "description": "Check whether measured post-collision velocities agree with equation (3).",
+          "instruction": "Show comparison and explain deviations if any.",
+          "responseFormat": "Open-ended / Explanation & Calculation",
+          "sourceLabel": "I.3",
+          "points": 6,
+          "required": true
+        },
+        {
+          "id": "collision-q4",
+          "labId": "laws-of-collisions",
+          "type": "text",
+          "title": "Head-on Elastic Case",
+          "description": "For $m_1=m_2=1\\,kg$, $v_2=-20\\,m/s$, $v_1=20\\,m/s$, determine post-collision outcome.",
+          "instruction": "Provide computed velocities and interpretation.",
+          "responseFormat": "Open-ended / Calculation",
+          "sourceLabel": "I.4",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "collision-q5",
+          "labId": "laws-of-collisions",
+          "type": "text",
+          "title": "Elastic Collision Deduction",
+          "description": "State what can be deduced/confirmed from elastic collision experiments.",
+          "instruction": "Summarize key conservation-law conclusions.",
+          "responseFormat": "Open-ended / Deduction",
+          "sourceLabel": "I.5",
+          "points": 4,
+          "required": true
+        },
+        {
+          "id": "collision-q6",
+          "labId": "laws-of-collisions",
+          "type": "table",
+          "title": "Inelastic Test: $m_1=m_2=1\\,kg$, $v_2=0$, $v_1=20$",
+          "description": "Run inelastic test with first configuration and fill table.",
+          "instruction": "Record measured and computed values.",
+          "responseFormat": "Table filling",
+          "sourceLabel": "II.1",
+          "points": 6,
+          "required": true,
+          "tableConfig": {
+            "columns": ["m1", "m2", "v1", "v2", "v_prime"],
+            "rows": 5,
+            "headers": [
+              "$m_1$ (kg)",
+              "$m_2$ (kg)",
+              "$v_1$ (m/s)",
+              "$v_2$ (m/s)",
+              "$v'$ common (m/s)"
+            ]
+          }
+        },
+        {
+          "id": "collision-q7",
+          "labId": "laws-of-collisions",
+          "type": "table",
+          "title": "Inelastic Test: $m_1 = 2m_2 = 2\\,kg$, $v_2 = 0$, $v_1 = 20$",
+          "description": "Run inelastic test with second configuration and fill table.",
+          "instruction": "Record all observations and values.",
+          "responseFormat": "Table filling",
+          "sourceLabel": "II.2",
+          "points": 6,
+          "required": true,
+          "tableConfig": {
+            "columns": ["m1", "m2", "v1", "v2", "v_prime"],
+            "rows": 5,
+            "headers": [
+              "$m_1$ (kg)",
+              "$m_2$ (kg)",
+              "$v_1$ (m/s)",
+              "$v_2$ (m/s)",
+              "$v'$ common (m/s)"
+            ]
+          }
+        },
+        {
+          "id": "collision-q8",
+          "labId": "laws-of-collisions",
+          "type": "text",
+          "title": "Inelastic Formula Agreement",
+          "description": "Check whether measured post-collision velocities agree with equation (4).",
+          "instruction": "Provide quantitative and qualitative comparison.",
+          "responseFormat": "Open-ended / Explanation & Calculation",
+          "sourceLabel": "II.3",
+          "points": 6,
+          "required": true
+        },
+        {
+          "id": "collision-q9",
+          "labId": "laws-of-collisions",
+          "type": "text",
+          "title": "Head-on Inelastic Case",
+          "description": "For $m_1=m_2=1\\,kg$, $v_2=-10\\,m/s$, $v_1=20\\,m/s$, determine post-collision outcome.",
+          "instruction": "Show calculations and discuss result.",
+          "responseFormat": "Open-ended / Calculation",
+          "sourceLabel": "II.4",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "collision-q10",
+          "labId": "laws-of-collisions",
+          "type": "text",
+          "title": "Inelastic Collision Deduction",
+          "description": "State what can be deduced/confirmed from inelastic collision experiments.",
+          "instruction": "Focus on momentum and kinetic energy behavior.",
+          "responseFormat": "Open-ended / Deduction",
+          "sourceLabel": "II.5",
+          "points": 4,
+          "required": true
+        },
+        {
+          "id": "collision-q11",
+          "labId": "laws-of-collisions",
+          "type": "table",
+          "title": "Velocity Sweep Data Table",
+          "description": "Repeat for different $v_1$ values and record corresponding $v_2'$.",
+          "instruction": "Gather complete table of measured values.",
+          "responseFormat": "Table filling",
+          "sourceLabel": "T8",
+          "points": 6,
+          "required": true,
+          "tableConfig": {
+            "columns": ["v1", "v2_prime"],
+            "rows": 8,
+            "headers": ["$v_1$ (m/s)", "$v_2'$ (m/s)"]
+          }
+        },
+        {
+          "id": "collision-q12",
+          "labId": "laws-of-collisions",
+          "type": "plot",
+          "title": "Plot $v_1$ vs $v_2'$",
+          "description": "Plot $(X=v_1, Y=v_2')$ points, add legend, and comment the graph.",
+          "instruction": "Use data from T8 and describe trend.",
+          "responseFormat": "Graphing / Open-ended",
+          "sourceLabel": "T9",
+          "points": 6,
+          "required": true,
+          "plotConfig": {
+            "xLabel": "$v_1$ (m/s)",
+            "yLabel": "$v_2'$ (m/s)",
+            "title": "$v_2'$ versus $v_1$"
+          }
+        },
+        {
+          "id": "collision-q13",
+          "labId": "laws-of-collisions",
+          "type": "text",
+          "title": "Graphical Slope $C'$",
+          "description": "Find slope $C'$ of $v_2'$ versus $v_1$ by graphical method.",
+          "instruction": "Show construction/fit method and computed slope.",
+          "responseFormat": "Open-ended / Calculation",
+          "sourceLabel": "T10",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "collision-q14",
+          "labId": "laws-of-collisions",
+          "type": "text",
+          "title": "Direct Ratio C",
+          "description": "Calculate ratio C directly from measured m1 and m2.",
+          "instruction": "Provide formula and value.",
+          "responseFormat": "Open-ended / Calculation",
+          "sourceLabel": "T11",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "collision-q15",
+          "labId": "laws-of-collisions",
+          "type": "text",
+          "title": "Compare C(mea) and C(pre)",
+          "description": "Compare measured and predicted ratios.",
+          "instruction": "Discuss agreement and sources of error.",
+          "responseFormat": "Open-ended / Comparison",
+          "sourceLabel": "T12",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "collision-q16",
+          "labId": "laws-of-collisions",
+          "type": "text",
+          "title": "Conclusion",
+          "description": "Summarize what is learned and discuss whether this is a complete study of collision laws.",
+          "instruction": "Mention missing cases and explain.",
+          "responseFormat": "Open-ended / Explanation",
+          "sourceLabel": "Conclusion",
+          "points": 8,
+          "required": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,8 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MedTech Virtual Laboratory
 
-## Getting Started
+A modern, interactive virtual laboratory platform for STEM education at SMU (Mediterranean Institution of Technology). Built with Next.js, TypeScript, and Tailwind CSS, this platform provides students with engaging physics simulations and educational content.
 
-First, run the development server:
+## 🔬 Features
+
+- **Interactive Physics Simulations**: Powered by PhET Interactive Simulations
+- **Office 365 SSO Authentication**: Secure login using SMU student/faculty accounts
+- **Role-Based Access**: Different features for students, faculty, and guests
+- **Comprehensive Lab Collection**: 3+ virtual laboratories covering mechanics, waves, electricity, thermodynamics, and optics
+- **User Dashboard**: Personalized dashboard with progress tracking and quick access
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
+- **Search & Filter**: Advanced filtering by category, difficulty, and topics
+- **Progress Tracking**: Monitor learning progress and lab completion
+- **Educational Resources**: Detailed lab instructions and learning objectives
+- **Evaluation System**: Built-in feedback and assessment tools
+- **Secure Authentication**: Microsoft Azure AD integration for enterprise security
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ (recommended)
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd medtech-vl-web
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
+3. Set up authentication:
+
+```bash
+# Copy the environment variables template
+cp .env.local.example .env.local
+
+# Edit .env.local and add your Azure AD credentials
+# See AZURE_AD_SETUP.md for detailed instructions
+```
+
+4. Run the development server:
 
 ```bash
 npm run dev
@@ -14,23 +66,124 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/                    # Next.js App Router pages
+│   ├── about/             # About page
+│   ├── contact/           # Contact page
+│   ├── evaluation/        # Lab evaluation system
+│   ├── labs/              # Virtual laboratories
+│   │   └── [id]/         # Dynamic lab pages
+│   ├── globals.css        # Global styles with Tailwind CSS
+│   ├── layout.tsx         # Root layout component
+│   └── page.tsx           # Home page
+├── components/            # Reusable React components
+│   ├── Footer.tsx         # Site footer
+│   └── Navigation.tsx     # Navigation bar
+└── lib/                   # Utilities and data
+    ├── data.ts            # Lab data and categories
+    └── types.ts           # TypeScript type definitions
+```
 
-## Learn More
+## 🧪 Virtual Laboratories
 
-To learn more about Next.js, take a look at the following resources:
+The platform includes the following virtual laboratories:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Mechanics
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Collision Lab**: Explore elastic and inelastic collisions
+- **Projectile Motion**: Investigate projectile trajectories
+- **Pendulum Lab**: Study oscillatory motion
 
-## Deploy on Vercel
+### Waves & Sound
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Wave on a String**: Explore wave properties
+- **Sound**: Investigate sound wave characteristics
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Electricity & Magnetism
+
+- **Circuit Construction Kit**: Build and analyze circuits
+- **Charges and Fields**: Visualize electric fields
+
+### Thermodynamics
+
+- **Energy Forms and Changes**: Study energy transformations
+
+### Optics
+
+- **Geometric Optics**: Study light behavior through lenses
+- **Bending Light**: Explore refraction and Snell's law
+
+## 🎨 Design System
+
+### Color Palette
+
+- **Primary**: #057999 (Teal/Cyan)
+- **Secondary**: Various complementary colors for categories
+- **Neutral**: Gray scale for text and backgrounds
+
+### Typography
+
+- **Font Family**: Heebo (Google Fonts)
+- **Weights**: 300, 400, 500, 600, 700
+
+### Components
+
+- Built with Tailwind CSS utility classes
+- Responsive design patterns
+- Consistent spacing and typography scale
+
+## 🛠️ Technology Stack
+
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4
+- **Fonts**: Google Fonts (Heebo)
+- **Simulations**: PhET Interactive Simulations (embedded)
+- **Development**: ESLint, PostCSS
+
+## 🔧 Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+
+## 📚 Educational Objectives
+
+This platform is designed to:
+
+1. **Enhance Understanding**: Make abstract physics concepts tangible through visualization
+2. **Promote Inquiry**: Encourage students to ask questions and explore
+3. **Support Learning**: Provide structured learning paths and objectives
+4. **Enable Accessibility**: Make quality physics education available anytime, anywhere
+5. **Foster Engagement**: Create interactive and engaging learning experiences
+
+## 🏫 About SMU
+
+This platform is developed for SMU (Mediterranean Institution of Technology), part of South Mediterranean University in Tunisia, dedicated to providing innovative educational technology solutions for STEM education.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 📞 Support
+
+For technical support or questions about the platform:
+
+- Email: support@medtech-vl.edu
+- Visit: [Contact Page](http://localhost:3000/contact)
+
+## 🙏 Acknowledgments
+
+- [PhET Interactive Simulations](https://phet.colorado.edu/) for providing high-quality physics simulations
+- [Next.js](https://nextjs.org/) for the excellent React framework
+- [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
