@@ -1,0 +1,130 @@
+/* Slider styles */
+.slider-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.slider-label {
+  width: 80px;
+  text-align: right;
+}
+
+.slider-input {
+  flex: 1;
+  cursor: pointer;
+}
+
+/* Style the slider track */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100px;
+  height: 8px; /* Track height */
+  background: #fafafa; /* Track color */
+  border-radius: 5px; /* Optional: rounded corners */
+  outline: none; /* Removes the outline on focus */
+  margin-top: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Style the slider thumb (the handle) */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px; /* Thumb width */
+  height: 20px; /* Thumb height */
+  background: #2596be; /* Thumb color */
+  border-radius: 50%; /* Circular thumb */
+  cursor: pointer; /* Cursor on hover */
+  transition: background-color 0.3s ease; /* Optional: smooth transition */
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #2596be;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Optional: add a hover effect for better interactivity */
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: #0c455a; /* Darker color on hover */
+}
+
+.indicator {
+  font-size: 12px;
+  color: #0c455a;
+}
+
+/* Stepper styles */
+.stepper-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stepper-label {
+  width: 100px;
+  text-align: right;
+}
+
+.stepper-button {
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #2596be;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepper-input {
+  width: 70px;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* Toggle styles */
+.toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toggle-label {
+  font-size: 12px;
+  color: #000;
+}
+
+/* Toggle switch */
+.toggle-switch {
+  min-width: 50px;
+  height: 24px;
+  background-color: #ccc;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.toggle-switch.active {
+  background-color: #2596be;
+}
+
+/* Toggle knob */
+.toggle-knob {
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: left 0.2s ease-in-out;
+}
+
+.toggle-switch.active .toggle-knob {
+  left: 26px;
+}

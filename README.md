@@ -95,6 +95,43 @@ The contact API currently sends submissions to:
 - `npm run start` — run production server
 - `npm run lint` — run ESLint
 
+## Lab AI Assistant (ADK + Groq + MCP)
+
+This repository now includes a lab tutoring assistant that is designed to guide students without giving final direct answers.
+
+- Next.js UI + API bridge:
+  - `src/components/labs/assistant/LabAssistantChat.tsx`
+  - `src/app/api/labs/assistant/route.ts`
+- MCP lab servers:
+  - `mcp/`
+- ADK/Groq assistant service:
+  - `adk-assistant/`
+
+### Local Setup
+
+1. Install MCP dependencies:
+
+```bash
+npm --prefix mcp install
+```
+
+2. Start ADK assistant service:
+
+```bash
+cd adk-assistant
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
+```
+
+3. Configure web app to use assistant service:
+
+```bash
+LAB_ASSISTANT_SERVICE_URL=http://localhost:8001
+```
+
 ## Notes
 
 - Lab content is maintained in `src/lib/labs.json`.

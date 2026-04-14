@@ -7,6 +7,8 @@ import { getLabById, labCategories } from "@/lib/data";
 import DynamicIcon from "@/components/DynamicIcon";
 import QuestionComponent from "@/components/QuestionComponent";
 import MathText from "@/components/MathText";
+import InternalLabRenderer from "@/components/labs/InternalLabRenderer";
+import LabAssistantChat from "@/components/labs/assistant/LabAssistantChat";
 import { StudentAnswer } from "@/lib/types";
 
 function getDifficultyColor(difficulty: string) {
@@ -226,7 +228,7 @@ export default function LabPage() {
                   {lab.objectives.map((objective, index) => (
                     <li key={index} className="flex items-start gap-3">
                       <svg
-                        className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0"
+                        className="w-5 h-5 text-green-500 mt-0.5 shrink-0"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -266,11 +268,10 @@ export default function LabPage() {
             </div>
 
             <div className="relative">
-              <iframe
-                src={lab.phetUrl}
-                className="w-full h-[600px] border-0"
+              <InternalLabRenderer
+                labId={lab.id}
                 title={lab.title}
-                allow="fullscreen"
+                fallbackUrl={lab.phetUrl}
               />
             </div>
           </div>
@@ -278,6 +279,15 @@ export default function LabPage() {
       </section>
 
       {/* Lab Questions Section */}
+      <LabAssistantChat
+        labId={lab.id}
+        labTitle={lab.title}
+        objectives={lab.objectives}
+        questions={lab.questions || []}
+        answers={Object.values(answers)}
+        questionTitles={(lab.questions || []).map((question) => question.title)}
+      />
+
       {lab.questions && lab.questions.length > 0 && (
         <section className="py-12 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -295,7 +305,7 @@ export default function LabPage() {
               {lab.questions.map((question, index) => (
                 <div key={question.id} className="bg-gray-50 rounded-xl p-6">
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                    <div className="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">
                       {index + 1}
                     </div>
                     <div className="flex-1">
@@ -356,7 +366,7 @@ export default function LabPage() {
               </h3>
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  <div className="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">
                     1
                   </div>
                   <div>
@@ -371,7 +381,7 @@ export default function LabPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  <div className="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">
                     2
                   </div>
                   <div>
@@ -386,7 +396,7 @@ export default function LabPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  <div className="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">
                     3
                   </div>
                   <div>
@@ -401,7 +411,7 @@ export default function LabPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  <div className="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">
                     4
                   </div>
                   <div>
@@ -424,7 +434,7 @@ export default function LabPage() {
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <svg
-                    className="w-6 h-6 text-yellow-500 mt-0.5 flex-shrink-0"
+                    className="w-6 h-6 text-yellow-500 mt-0.5 shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -449,7 +459,7 @@ export default function LabPage() {
 
                 <div className="flex items-start gap-3">
                   <svg
-                    className="w-6 h-6 text-blue-500 mt-0.5 flex-shrink-0"
+                    className="w-6 h-6 text-blue-500 mt-0.5 shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -474,7 +484,7 @@ export default function LabPage() {
 
                 <div className="flex items-start gap-3">
                   <svg
-                    className="w-6 h-6 text-green-500 mt-0.5 flex-shrink-0"
+                    className="w-6 h-6 text-green-500 mt-0.5 shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -499,7 +509,7 @@ export default function LabPage() {
 
                 <div className="flex items-start gap-3">
                   <svg
-                    className="w-6 h-6 text-purple-500 mt-0.5 flex-shrink-0"
+                    className="w-6 h-6 text-purple-500 mt-0.5 shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"

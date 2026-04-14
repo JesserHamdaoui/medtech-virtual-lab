@@ -41,6 +41,7 @@ function LabCard({ lab }: { lab: Lab }) {
           src={cardImage}
           alt={`${lab.title} preview image`}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover"
         />
       </div>
@@ -150,7 +151,7 @@ export default function LabsPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white py-20">
+      <section className="bg-linear-to-r from-primary-600 to-primary-800 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -189,6 +190,7 @@ export default function LabsPage() {
                   src="/images/students.webp"
                   alt="Laboratory equipment and practical experiment"
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
                 />
               </div>

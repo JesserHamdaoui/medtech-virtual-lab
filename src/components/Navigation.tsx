@@ -26,7 +26,7 @@ export default function Navigation() {
               alt="MedTech Virtual Laboratory"
               width={120}
               height={120}
-              className="rounded-lg"
+              className="h-12 w-auto rounded-lg"
             />
           </Link>
 

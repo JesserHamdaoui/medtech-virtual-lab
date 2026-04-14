@@ -1,0 +1,20 @@
+{
+  "name": "medtech-vl-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "collision": "tsx src/servers/collision.ts",
+    "coulombs-law": "tsx src/servers/coulombsLaw.ts",
+    "standing-waves": "tsx src/servers/standingWaves.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.4",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  }
+}

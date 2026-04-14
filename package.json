@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -18,15 +18,20 @@
     "@next-auth/prisma-adapter": "^1.0.7",
     "@types/bcryptjs": "^3.0.0",
     "@types/nodemailer": "^7.0.0",
+    "@types/p5": "^1.7.6",
     "bcryptjs": "^3.0.2",
     "katex": "^0.16.38",
     "microsoft-graph": "^3.11.19",
     "next": "15.5.13",
     "next-auth": "^4.24.11",
     "nodemailer": "^6.10.1",
+    "p5": "^1.11.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-katex": "^3.1.0"
+    "react-draggable": "^4.4.6",
+    "react-full-screen": "^1.1.1",
+    "react-katex": "^3.1.0",
+    "react-p5": "^1.4.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
