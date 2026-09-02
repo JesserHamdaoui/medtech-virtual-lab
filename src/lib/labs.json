@@ -17,6 +17,12 @@
       "name": "Electricity & Magnetism",
       "description": "Electrostatics, electric forces, fields, and charge interactions",
       "icon": "Lightning"
+    },
+    {
+      "id": "chemistry",
+      "name": "Chemistry",
+      "description": "Organic compounds, chemical reactivity, and identification tests",
+      "icon": "Chemistry"
     }
   ],
   "labs": [
@@ -46,7 +52,6 @@
         "Wave Propagation",
         "Harmonic Wavelength"
       ],
-      "phetUrl": "https://medtech-standing-wave-vl-beta.vercel.app/",
       "thumbnail": "/images/thumbnail_standing_wave.jpeg",
       "objectives": [
         "Measure wave propagation velocity on a cord",
@@ -290,7 +295,6 @@
         "Inverse Square Law",
         "Coulomb's Constant"
       ],
-      "phetUrl": "https://medtech-vl-coulombs-law.vercel.app/",
       "thumbnail": "/images/thumbnail_coulomb.jpeg",
       "objectives": [
         "Verify proportionality of electrostatic force with product of charges",
@@ -317,9 +321,19 @@
           "points": 8,
           "required": true,
           "tableConfig": {
-            "columns": ["q1", "q2", "r", "F21"],
+            "columns": [
+              "q1",
+              "q2",
+              "r",
+              "F21"
+            ],
             "rows": 6,
-            "headers": ["q1 (C)", "q2 (C)", "Distance r (m)", "Force F21 (N)"]
+            "headers": [
+              "q1 (C)",
+              "q2 (C)",
+              "Distance r (m)",
+              "Force F21 (N)"
+            ]
           }
         },
         {
@@ -358,7 +372,13 @@
           "points": 8,
           "required": true,
           "tableConfig": {
-            "columns": ["q1", "q2", "r", "1_over_r2", "F12"],
+            "columns": [
+              "q1",
+              "q2",
+              "r",
+              "1_over_r2",
+              "F12"
+            ],
             "rows": 6,
             "headers": [
               "$q_1$ (C)",
@@ -477,7 +497,6 @@
         "Inelastic Collision",
         "Velocity"
       ],
-      "phetUrl": "https://medtech-vl-collision.vercel.app/",
       "thumbnail": "/images/thumbnail_collision.jpeg",
       "objectives": [
         "Verify momentum conservation in elastic and inelastic collisions",
@@ -504,7 +523,14 @@
           "points": 6,
           "required": true,
           "tableConfig": {
-            "columns": ["m1", "m2", "v1", "v2", "v1_prime", "v2_prime"],
+            "columns": [
+              "m1",
+              "m2",
+              "v1",
+              "v2",
+              "v1_prime",
+              "v2_prime"
+            ],
             "rows": 5,
             "headers": [
               "$m_1$ (kg)",
@@ -528,7 +554,14 @@
           "points": 6,
           "required": true,
           "tableConfig": {
-            "columns": ["m1", "m2", "v1", "v2", "v1_prime", "v2_prime"],
+            "columns": [
+              "m1",
+              "m2",
+              "v1",
+              "v2",
+              "v1_prime",
+              "v2_prime"
+            ],
             "rows": 5,
             "headers": [
               "$m_1$ (kg)",
@@ -588,7 +621,13 @@
           "points": 6,
           "required": true,
           "tableConfig": {
-            "columns": ["m1", "m2", "v1", "v2", "v_prime"],
+            "columns": [
+              "m1",
+              "m2",
+              "v1",
+              "v2",
+              "v_prime"
+            ],
             "rows": 5,
             "headers": [
               "$m_1$ (kg)",
@@ -611,7 +650,13 @@
           "points": 6,
           "required": true,
           "tableConfig": {
-            "columns": ["m1", "m2", "v1", "v2", "v_prime"],
+            "columns": [
+              "m1",
+              "m2",
+              "v1",
+              "v2",
+              "v_prime"
+            ],
             "rows": 5,
             "headers": [
               "$m_1$ (kg)",
@@ -670,9 +715,15 @@
           "points": 6,
           "required": true,
           "tableConfig": {
-            "columns": ["v1", "v2_prime"],
+            "columns": [
+              "v1",
+              "v2_prime"
+            ],
             "rows": 8,
-            "headers": ["$v_1$ (m/s)", "$v_2'$ (m/s)"]
+            "headers": [
+              "$v_1$ (m/s)",
+              "$v_2'$ (m/s)"
+            ]
           }
         },
         {

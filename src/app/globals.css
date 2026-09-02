@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "katex/dist/katex.min.css";
+@import "../components/labs/shared/sim-tokens.css";
 
 @theme {
   /* Colors */

@@ -7,7 +7,6 @@ export interface Lab {
   difficulty: "Beginner" | "Intermediate" | "Advanced";
   duration: string;
   topics: string[];
-  phetUrl: string;
   tags?: string[];
   thumbnail?: string;
   objectives: string[];
