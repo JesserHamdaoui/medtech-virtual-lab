@@ -321,19 +321,9 @@
           "points": 8,
           "required": true,
           "tableConfig": {
-            "columns": [
-              "q1",
-              "q2",
-              "r",
-              "F21"
-            ],
+            "columns": ["q1", "q2", "r", "F21"],
             "rows": 6,
-            "headers": [
-              "q1 (C)",
-              "q2 (C)",
-              "Distance r (m)",
-              "Force F21 (N)"
-            ]
+            "headers": ["q1 (C)", "q2 (C)", "Distance r (m)", "Force F21 (N)"]
           }
         },
         {
@@ -372,13 +362,7 @@
           "points": 8,
           "required": true,
           "tableConfig": {
-            "columns": [
-              "q1",
-              "q2",
-              "r",
-              "1_over_r2",
-              "F12"
-            ],
+            "columns": ["q1", "q2", "r", "1_over_r2", "F12"],
             "rows": 6,
             "headers": [
               "$q_1$ (C)",
@@ -523,14 +507,7 @@
           "points": 6,
           "required": true,
           "tableConfig": {
-            "columns": [
-              "m1",
-              "m2",
-              "v1",
-              "v2",
-              "v1_prime",
-              "v2_prime"
-            ],
+            "columns": ["m1", "m2", "v1", "v2", "v1_prime", "v2_prime"],
             "rows": 5,
             "headers": [
               "$m_1$ (kg)",
@@ -554,14 +531,7 @@
           "points": 6,
           "required": true,
           "tableConfig": {
-            "columns": [
-              "m1",
-              "m2",
-              "v1",
-              "v2",
-              "v1_prime",
-              "v2_prime"
-            ],
+            "columns": ["m1", "m2", "v1", "v2", "v1_prime", "v2_prime"],
             "rows": 5,
             "headers": [
               "$m_1$ (kg)",
@@ -621,13 +591,7 @@
           "points": 6,
           "required": true,
           "tableConfig": {
-            "columns": [
-              "m1",
-              "m2",
-              "v1",
-              "v2",
-              "v_prime"
-            ],
+            "columns": ["m1", "m2", "v1", "v2", "v_prime"],
             "rows": 5,
             "headers": [
               "$m_1$ (kg)",
@@ -650,13 +614,7 @@
           "points": 6,
           "required": true,
           "tableConfig": {
-            "columns": [
-              "m1",
-              "m2",
-              "v1",
-              "v2",
-              "v_prime"
-            ],
+            "columns": ["m1", "m2", "v1", "v2", "v_prime"],
             "rows": 5,
             "headers": [
               "$m_1$ (kg)",
@@ -715,15 +673,9 @@
           "points": 6,
           "required": true,
           "tableConfig": {
-            "columns": [
-              "v1",
-              "v2_prime"
-            ],
+            "columns": ["v1", "v2_prime"],
             "rows": 8,
-            "headers": [
-              "$v_1$ (m/s)",
-              "$v_2'$ (m/s)"
-            ]
+            "headers": ["$v_1$ (m/s)", "$v_2'$ (m/s)"]
           }
         },
         {
@@ -789,6 +741,216 @@
           "responseFormat": "Open-ended / Explanation",
           "sourceLabel": "Conclusion",
           "points": 8,
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "identification-of-hydrocarbons",
+      "title": "Identification of Hydrocarbons",
+      "labTitle": "Experiment 2. Identification of hydrocarbons",
+      "description": "Investigate the physical and chemical properties of hydrocarbons — solubility, density, combustion, and reactivity toward bromine, potassium permanganate, and sulfuric acid — to distinguish an alkane, an alkene, and an aromatic compound, then use those properties to identify three unknowns.",
+      "thumbnail": "/images/thumbnail_identification_of_hydrocarbons.png",
+      "category": "chemistry",
+      "difficulty": "Intermediate",
+      "duration": "90 min",
+      "topics": [
+        "Hydrocarbons",
+        "Alkanes",
+        "Alkenes",
+        "Aromatic Compounds",
+        "Solubility",
+        "Combustion",
+        "Bromine Test",
+        "KMnO4 Test"
+      ],
+      "tags": [
+        "Hydrocarbons",
+        "Alkanes",
+        "Alkenes",
+        "Aromatic Compounds",
+        "Solubility",
+        "Combustion",
+        "Bromine Test",
+        "KMnO4 Test",
+        "Unknown Identification"
+      ],
+      "objectives": [
+        "Investigate the physical properties, solubility and density, of some hydrocarbons",
+        "Compare the chemical reactivity of an alkane, an alkene, and an aromatic compound",
+        "Use physical and chemical properties to identify an unknown"
+      ],
+      "metadata": {
+        "sourceTitle": "Experiment 2. Identification of hydrocarbons",
+        "course": "CHEM LABS / MEDTECH CHEMISTRY LABS",
+        "level": "Freshman",
+        "institution": "SMU, MedTech"
+      },
+      "questions": [
+        {
+          "id": "hydrocarbons-prelab-1",
+          "labId": "identification-of-hydrocarbons",
+          "type": "text",
+          "title": "Bonding and Reactivity of Hydrocarbon Classes",
+          "description": "Describe the differences between alkanes, alkenes, alkynes, and aromatic hydrocarbons in terms of bonding and general chemical reactivity.",
+          "instruction": "Cover bond type (single/double/triple/aromatic sextet) and general reactivity for each class.",
+          "responseFormat": "Open-ended / Explanation",
+          "sourceLabel": "Pre-Lab 1",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "hydrocarbons-prelab-2",
+          "labId": "identification-of-hydrocarbons",
+          "type": "text",
+          "title": "Density and Solubility of Hydrocarbons",
+          "description": "Why do hydrocarbons generally float on water, and what does this indicate about their density? How does their solubility differ in polar versus nonpolar solvents?",
+          "instruction": "Relate nonpolar character to solubility behavior and to relative density versus water.",
+          "responseFormat": "Open-ended / Explanation",
+          "sourceLabel": "Pre-Lab 2",
+          "points": 5,
+          "required": true
+        },
+        {
+          "id": "hydrocarbons-prelab-3",
+          "labId": "identification-of-hydrocarbons",
+          "type": "text",
+          "title": "Industrial Synthesis of Hydrocarbons",
+          "description": "What are common industrial methods for synthesizing alkanes, alkenes, and aromatic hydrocarbons? Provide one example reaction for each type.",
+          "instruction": "Give one example reaction per class (alkane, alkene, aromatic).",
+          "responseFormat": "Open-ended / Explanation",
+          "sourceLabel": "Pre-Lab 3",
+          "points": 6,
+          "required": true
+        },
+        {
+          "id": "hydrocarbons-q1",
+          "labId": "identification-of-hydrocarbons",
+          "type": "table",
+          "title": "Physical Properties of Hydrocarbons",
+          "description": "For each hydrocarbon, record solubility (mix/soluble or not mix/insoluble) and relative density in water and in ligroin.",
+          "instruction": "Fill in solubility and density observations for hexane, cyclohexene, toluene, and unknowns A, B, C in both water and ligroin.",
+          "responseFormat": "Table filling",
+          "sourceLabel": "Physical Properties",
+          "points": 12,
+          "required": true,
+          "tableConfig": {
+            "columns": [
+              "hydrocarbon",
+              "h2o_solubility",
+              "h2o_density",
+              "ligroin_solubility",
+              "ligroin_density"
+            ],
+            "rows": 6,
+            "headers": [
+              "Hydrocarbon",
+              "H2O Solubility",
+              "H2O Density",
+              "Ligroin Solubility",
+              "Ligroin Density"
+            ]
+          }
+        },
+        {
+          "id": "hydrocarbons-q2",
+          "labId": "identification-of-hydrocarbons",
+          "type": "table",
+          "title": "Chemical Properties of Hydrocarbons",
+          "description": "For each hydrocarbon, record observations for the combustion, bromine, KMnO4, and H2SO4 tests.",
+          "instruction": "Fill in observations for hexane, cyclohexene, toluene, and unknowns A, B, C across all four chemical tests.",
+          "responseFormat": "Table filling",
+          "sourceLabel": "Chemical Properties",
+          "points": 16,
+          "required": true,
+          "tableConfig": {
+            "columns": [
+              "hydrocarbon",
+              "combustion",
+              "bromine_test",
+              "kmno4_test",
+              "h2so4_test"
+            ],
+            "rows": 6,
+            "headers": [
+              "Hydrocarbon",
+              "Combustion",
+              "Bromine Test",
+              "KMnO4 Test",
+              "H2SO4 Test"
+            ]
+          }
+        },
+        {
+          "id": "hydrocarbons-q3",
+          "labId": "identification-of-hydrocarbons",
+          "type": "text",
+          "title": "Identity of Unknown A",
+          "description": "Based on your physical and chemical property observations, identify Unknown A.",
+          "instruction": "State whether Unknown A is hexane (alkane), cyclohexene (alkene), or toluene (aromatic), and justify using your data.",
+          "responseFormat": "Open-ended / Identification",
+          "sourceLabel": "Unknown Identification",
+          "points": 4,
+          "required": true
+        },
+        {
+          "id": "hydrocarbons-q4",
+          "labId": "identification-of-hydrocarbons",
+          "type": "text",
+          "title": "Identity of Unknown B",
+          "description": "Based on your physical and chemical property observations, identify Unknown B.",
+          "instruction": "State whether Unknown B is hexane (alkane), cyclohexene (alkene), or toluene (aromatic), and justify using your data.",
+          "responseFormat": "Open-ended / Identification",
+          "sourceLabel": "Unknown Identification",
+          "points": 4,
+          "required": true
+        },
+        {
+          "id": "hydrocarbons-q5",
+          "labId": "identification-of-hydrocarbons",
+          "type": "text",
+          "title": "Identity of Unknown C",
+          "description": "Based on your physical and chemical property observations, identify Unknown C.",
+          "instruction": "State whether Unknown C is hexane (alkane), cyclohexene (alkene), or toluene (aromatic), and justify using your data.",
+          "responseFormat": "Open-ended / Identification",
+          "sourceLabel": "Unknown Identification",
+          "points": 4,
+          "required": true
+        },
+        {
+          "id": "hydrocarbons-postlab-1",
+          "labId": "identification-of-hydrocarbons",
+          "type": "text",
+          "title": "Predict Major Products (or NR)",
+          "description": "Write the structure of the major organic product for each reaction below; if no reaction, write NR.\na. $CH_3\\text{-}CH{=}CH_2 + Br_2$\nb. cyclohexane $+ KMnO_4 + H_2O$\nc. $CH_3\\text{-}CH{=}CH\\text{-}CH_3 + H_2SO_4$\nd. benzene $+ KMnO_4$",
+          "instruction": "Give the product (or NR) for each of the four reactions, with brief reasoning based on bond type.",
+          "responseFormat": "Open-ended / Structures",
+          "sourceLabel": "Post-Lab 1",
+          "points": 8,
+          "required": true
+        },
+        {
+          "id": "hydrocarbons-postlab-2",
+          "labId": "identification-of-hydrocarbons",
+          "type": "text",
+          "title": "Predicting Properties of Octane",
+          "description": "Octane is an unbranched alkane of formula C8H18. Based on your observations in this experiment, predict: (a) solubility in water, (b) solubility in ligroin, (c) combustion characteristics, (d) density versus water.",
+          "instruction": "Answer all four parts (a–d) based on alkane behavior observed for hexane.",
+          "responseFormat": "Open-ended / Prediction",
+          "sourceLabel": "Post-Lab 2",
+          "points": 6,
+          "required": true
+        },
+        {
+          "id": "hydrocarbons-postlab-3",
+          "labId": "identification-of-hydrocarbons",
+          "type": "text",
+          "title": "Predicting Properties of Hexene",
+          "description": "Hexene is an alkene. Based on your observations in this experiment, what should you expect to see for this compound in: (a) the bromine test, (b) the KMnO4 test, (c) combustion?",
+          "instruction": "Answer all three parts (a–c) based on alkene behavior observed for cyclohexene.",
+          "responseFormat": "Open-ended / Prediction",
+          "sourceLabel": "Post-Lab 3",
+          "points": 5,
           "required": true
         }
       ]
