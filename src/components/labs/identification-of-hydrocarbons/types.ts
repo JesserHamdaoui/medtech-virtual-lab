@@ -12,9 +12,15 @@ export interface SampleInfo {
   label: string;
 }
 
+export interface TestProcedure {
+  title: string;
+  steps: string[];
+}
+
 export interface TestInfo {
   id: TestId;
   label: string;
+  procedures: TestProcedure[];
 }
 
 export type HydrocarbonId = "hexane" | "cyclohexene" | "toluene";
@@ -37,11 +43,85 @@ export const SAMPLES: SampleInfo[] = [
 ];
 
 export const TESTS: TestInfo[] = [
-  { id: "solubility", label: "Solubility Test" },
-  { id: "bromine", label: "Bromine Test" },
-  { id: "kmno4", label: "Potassium Permanganate Test" },
-  { id: "h2so4", label: "Sulfuric Acid Test" },
-  { id: "combustion", label: "Combustion Test" },
+  {
+    id: "solubility",
+    label: "Solubility Test",
+    procedures: [
+      {
+        title: "Solubility in Water",
+        steps: [
+          "Add 5 drops of water.",
+          "Click MIX to shake the tube.",
+          "Observe whether the mixture forms one layer or two.",
+        ],
+      },
+      {
+        title: "Solubility in Petroleum Ether (Ligroin)",
+        steps: [
+          "Add 5 drops of petroleum ether (ligroin).",
+          "Click MIX to shake the tube.",
+          "Observe whether the mixture forms one layer or two.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "bromine",
+    label: "Bromine Test",
+    procedures: [
+      {
+        title: "Bromine Test",
+        steps: [
+          "Add 5 drops of bromine solution.",
+          "Click MIX to shake the tube.",
+          "Observe any color change.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "kmno4",
+    label: "Potassium Permanganate Test",
+    procedures: [
+      {
+        title: "Potassium Permanganate Test",
+        steps: [
+          "Add 5 drops of potassium permanganate (KMnO4) solution.",
+          "Click MIX to shake the tube.",
+          "Observe any color change.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "h2so4",
+    label: "Sulfuric Acid Test",
+    procedures: [
+      {
+        title: "Sulfuric Acid Test",
+        steps: [
+          "Add 5 drops of sulfuric acid (H2SO4).",
+          "Click MIX to shake the tube.",
+          "Observe the temperature and any reaction.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "combustion",
+    label: "Combustion Test",
+    procedures: [
+      {
+        title: "Combustion Test",
+        steps: [
+          "Select the unknown sample.",
+          "Place the sample onto the watch glass.",
+          "Click IGNITE.",
+          "Observe the flame and any smoke.",
+        ],
+      },
+    ],
+  },
 ];
 
 /**
