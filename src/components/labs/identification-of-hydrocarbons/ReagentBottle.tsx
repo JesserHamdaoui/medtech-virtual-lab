@@ -14,6 +14,9 @@ export default function ReagentBottle({ reagent, disabled }: ReagentBottleProps)
   return (
     <Card
       draggable={!disabled}
+      // Read on dragstart to tell the 3D bench what is being held, so the
+      // vessel that can take it outlines itself.
+      data-reagent={reagent.id}
       onDragStart={(e) => {
         if (disabled) {
           e.preventDefault();
