@@ -329,19 +329,23 @@ export default function HydrocarbonsSim() {
                 heightPx: sampleLigroinDrops * PX_PER_DROP,
               },
             ]
-        : [
-            { color: SAMPLE_TUBE_COLOR, heightPx: SAMPLE_DROPS * PX_PER_DROP },
-            {
-              color:
-                reagent?.tubeColor ??
-                REAGENTS.find((r) => r.id === openTest)?.tubeColor ??
-                SAMPLE_TUBE_COLOR,
-              heightPx: sampleSingleDropTestDrops * PX_PER_DROP,
-            },
-            ...(reagent?.precipitateColor
-              ? [{ color: reagent.precipitateColor, heightPx: 4 }]
-              : []),
-          ];
+        : reacted
+          ? // Bromine/KMnO4/H2SO4 are single-phase reactions once mixed, so a
+            // resolved result renders as one homogeneous tube color rather
+            // than stacked bands.
+            [
+              {
+                color: reagent?.tubeColor ?? SAMPLE_TUBE_COLOR,
+                heightPx: SAMPLE_DROPS * PX_PER_DROP + sampleSingleDropTestDrops * PX_PER_DROP,
+              },
+            ]
+          : [
+              { color: SAMPLE_TUBE_COLOR, heightPx: SAMPLE_DROPS * PX_PER_DROP },
+              {
+                color: REAGENTS.find((r) => r.id === openTest)?.tubeColor ?? SAMPLE_TUBE_COLOR,
+                heightPx: sampleSingleDropTestDrops * PX_PER_DROP,
+              },
+            ];
 
     return {
       session,

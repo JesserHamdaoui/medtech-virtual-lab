@@ -244,8 +244,6 @@ export interface ReactionOutcome {
   label: string;
   /** Longer explanation of what's happening chemically. */
   detail: string;
-  /** Optional sediment/precipitate band drawn above the reacted layer. */
-  precipitateColor?: string;
   heatLevel?: HeatLevel;
   /** Solubility outcomes only: true once the reagent fully blends into the sample, so the tube should render one merged band instead of separate layers. */
   miscible?: boolean;
@@ -267,12 +265,12 @@ function bucketFor(test: TestId, drops: number): DropBucket {
 const SOLVENT_OUTCOMES: Record<"water" | "ligroin", Record<"faint" | "clear", ReactionOutcome>> = {
   water: {
     faint: {
-      tubeColor: "#cfeaf4",
+      tubeColor: "#9cc9e8",
       label: "Layers separate (faint)",
       detail: "Too little water to see the separation clearly yet.",
     },
     clear: {
-      tubeColor: "#cfeaf4",
+      tubeColor: "#4a90d9",
       label: "Two layers, immiscible",
       detail: "Clean heterogeneous separation. Nonpolar hydrocarbon doesn't mix with water.",
     },
@@ -323,17 +321,15 @@ const KMNO4_OUTCOMES: Record<HydrocarbonId, Record<"low" | "high", ReactionOutco
   },
   cyclohexene: {
     low: {
-      tubeColor: "#e8dfc8",
+      tubeColor: "#6b4a1f",
       label: "Positive, decolorized",
       detail: "Purple fully disappears and brown MnO₂ precipitate forms. Clean positive result.",
-      precipitateColor: "#6b4a1f",
     },
     high: {
       tubeColor: "#b483d6",
       label: "Ambiguous, excess KMnO₄ remains",
       detail:
         "Excess KMnO₄ stays unreacted, so the solution stays partly purple with only some brown precipitate, masking a true positive as ambiguous.",
-      precipitateColor: "#6b4a1f",
     },
   },
   toluene: {
