@@ -2,19 +2,31 @@
 
 import { MAX_DROPS_PER_REAGENT } from "./types";
 import SampleDropper from "./SampleDropper";
+import { SAMPLE_PAYLOAD } from "./unity/protocol";
 
 interface CombustionTestPanelProps {
   sampleLabel: string;
-  drops: number;
+  /** What the dropper on the bench is holding, if anything. */
+  dropper: string;
+  onPick: () => void;
 }
 
-export default function CombustionTestPanel({ sampleLabel, drops }: CombustionTestPanelProps) {
+export default function CombustionTestPanel({
+  sampleLabel,
+  dropper,
+  onPick,
+}: CombustionTestPanelProps) {
   return (
     <div className="space-y-3">
       <p className="text-xs text-[var(--sim-neutral-500)]">
-        Drag the sample dropper onto the watch glass, then ignite (max {MAX_DROPS_PER_REAGENT}).
+        Pick up the sample dropper, click it over the watch glass to add a
+        drop, then ignite (max {MAX_DROPS_PER_REAGENT}).
       </p>
-      <SampleDropper sampleLabel={sampleLabel} disabled={drops >= MAX_DROPS_PER_REAGENT} />
+      <SampleDropper
+        sampleLabel={sampleLabel}
+        active={dropper === SAMPLE_PAYLOAD}
+        onPick={onPick}
+      />
     </div>
   );
 }

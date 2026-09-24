@@ -1,9 +1,8 @@
 "use client";
 
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import { ReactNode, useCallback, useEffect, useRef } from "react";
 import { ReagentId, SampleId } from "./types";
 import {
-  DropPayload,
   resolveCssColor,
   SAMPLE_PAYLOAD,
   UNITY_BRIDGE_OBJECT,
@@ -18,9 +17,9 @@ const BUILD_NAME = "hydrocarbons";
 
 interface UnityWorkbenchProps {
   state: UnityWorkbenchState;
-  /** Selects a pane — clicking or dragging into one makes it the active sample. */
+  /** Selects a pane — clicking into one makes it the active sample. */
   onSelectSample: (sampleId: SampleId) => void;
-  /** sampleId is the bench Unity reports the drop landed on, if any. */
+  /** sampleId is the bench Unity reports the droplet landed on, if any. */
   onReagentDrop: (reagentId: ReagentId, sampleId?: SampleId) => void;
   onSampleDrop: (sampleId?: SampleId) => void;
   /** Rendered instead of the canvas if the build can't be loaded. */
@@ -32,9 +31,10 @@ interface UnityWorkbenchProps {
  * test sidebar, the toolbar, the outcome card — stays in React and keeps
  * driving the same state, so both halves always describe the same tube.
  *
- * Unity is purely a renderer and a hit-test surface here. It never decides
- * whether a drop is legal or what a reagent does; it reports what was hit
- * and React applies the rules it already owns.
+ * Unity is purely a renderer and an input surface here. Picking a reagent in
+ * the sidebar stands its dropper on the bench; clicking that dropper squeezes
+ * a droplet, and Unity reports where it landed. It never decides whether a
+ * drop is legal or what a reagent does — React applies the rules it owns.
  */
 export default function UnityWorkbench({
   state,
@@ -45,7 +45,6 @@ export default function UnityWorkbench({
 }: UnityWorkbenchProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isDragOver, setIsDragOver] = useState(false);
 
   const { status, progress, error, instanceRef } = useUnityInstance(canvasRef, {
     buildUrl: BUILD_URL,
@@ -104,7 +103,8 @@ export default function UnityWorkbench({
         return;
       }
 
-      if (detail.type === "drop" && detail.accepted) {
+      // A droplet has landed in a vessel, so one drop is added to that bench.
+      if (detail.type === "drip" && detail.accepted) {
         const sampleId = detail.sample ? (detail.sample as SampleId) : undefined;
 
         if (detail.payload === SAMPLE_PAYLOAD) {
@@ -143,44 +143,6 @@ export default function UnityWorkbench({
     return state.panes[state.panes.length - 1]?.sample ?? null;
   };
 
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setIsDragOver(false);
-
-    const reagentId = event.dataTransfer.getData("application/x-reagent");
-    const sample = event.dataTransfer.getData("application/x-sample-dropper");
-    const payload: DropPayload | "" = reagentId
-      ? (reagentId as ReagentId)
-      : sample
-        ? SAMPLE_PAYLOAD
-        : "";
-
-    if (!payload) return;
-
-    const instance = instanceRef.current;
-    const element = containerRef.current;
-    if (!instance || !element) return;
-
-    // The pane a drop lands in becomes the selected one, so the toolbar acts on
-    // the bench the user just used.
-    const dropped = paneAt(event.clientX);
-    if (dropped) onSelectSample(dropped);
-
-    // HTML5 drag events never reach Unity's own input system, so the browser
-    // has to say where the drop landed. Coordinates go over normalised, with
-    // the DOM's top-left origin, and the C# side flips them into screen space.
-    const rect = element.getBoundingClientRect();
-    instance.SendMessage(
-      UNITY_BRIDGE_OBJECT,
-      "DropAt",
-      JSON.stringify({
-        payload,
-        x: (event.clientX - rect.left) / rect.width,
-        y: (event.clientY - rect.top) / rect.height,
-      }),
-    );
-  };
-
   if (status === "error") {
     return (
       <>
@@ -196,17 +158,6 @@ export default function UnityWorkbench({
     <div
       ref={containerRef}
       className="absolute inset-0"
-      onDragOver={(event) => {
-        event.preventDefault();
-        event.dataTransfer.dropEffect = "copy";
-        setIsDragOver(true);
-        // Dragging into a pane selects it, so the drop and the toolbar act on
-        // the bench the user is actually pointing at.
-        const hovered = paneAt(event.clientX);
-        if (hovered && hovered !== state.sample) onSelectSample(hovered);
-      }}
-      onDragLeave={() => setIsDragOver(false)}
-      onDrop={handleDrop}
       onPointerDown={(event) => {
         const clicked = paneAt(event.clientX);
         if (clicked) onSelectSample(clicked);
@@ -220,9 +171,6 @@ export default function UnityWorkbench({
         // fails to start.
         id="unity-canvas"
         className="block w-full h-full"
-        // Unity sizes its drawing buffer from the element's CSS box, so the
-        // canvas must be laid out before the instance is created.
-        style={{ outline: isDragOver ? "3px dashed var(--sim-accent-700)" : "none" }}
       />
 
       {split && status === "ready" && (

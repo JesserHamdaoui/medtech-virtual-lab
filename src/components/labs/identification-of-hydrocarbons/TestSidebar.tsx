@@ -1,6 +1,6 @@
 "use client";
 
-import { TestId, TestSessionState, TESTS, testSessionHasActivity } from "./types";
+import { ReagentId, TestId, TestSessionState, TESTS, testSessionHasActivity } from "./types";
 import TestSection from "./TestSection";
 import SolubilityTestPanel from "./SolubilityTestPanel";
 import ReagentTestPanel from "./ReagentTestPanel";
@@ -11,6 +11,12 @@ interface TestSidebarProps {
   openTest: TestId | null;
   onToggleTest: (testId: TestId) => void;
   sampleLabel: string;
+  /** What the dropper on the 3D bench is holding, if anything. */
+  dropper: string;
+  /** Puts a reagent's dropper on the bench. */
+  onPickReagent: (reagentId: ReagentId) => void;
+  /** Puts the sample's own dropper on the bench, for combustion. */
+  onPickSample: () => void;
 }
 
 export default function TestSidebar({
@@ -18,6 +24,9 @@ export default function TestSidebar({
   openTest,
   onToggleTest,
   sampleLabel,
+  dropper,
+  onPickReagent,
+  onPickSample,
 }: TestSidebarProps) {
   return (
     <div className="w-full md:w-72 shrink-0 border-2 border-[var(--sim-border)] bg-[var(--sim-panel-bg)]">
@@ -29,14 +38,39 @@ export default function TestSidebar({
           hasActivity={testSessionHasActivity(session, test.id)}
           onToggle={() => onToggleTest(test.id)}
         >
-          {test.id === "solubility" && <SolubilityTestPanel state={session.solubility} />}
-          {test.id === "bromine" && (
-            <ReagentTestPanel reagentId="bromine" drops={session.bromine} />
+          {test.id === "solubility" && (
+            <SolubilityTestPanel
+              dropper={dropper}
+              onPick={onPickReagent}
+            />
           )}
-          {test.id === "kmno4" && <ReagentTestPanel reagentId="kmno4" drops={session.kmno4} />}
-          {test.id === "h2so4" && <ReagentTestPanel reagentId="h2so4" drops={session.h2so4} />}
+          {test.id === "bromine" && (
+            <ReagentTestPanel
+              reagentId="bromine"
+              dropper={dropper}
+              onPick={onPickReagent}
+            />
+          )}
+          {test.id === "kmno4" && (
+            <ReagentTestPanel
+              reagentId="kmno4"
+              dropper={dropper}
+              onPick={onPickReagent}
+            />
+          )}
+          {test.id === "h2so4" && (
+            <ReagentTestPanel
+              reagentId="h2so4"
+              dropper={dropper}
+              onPick={onPickReagent}
+            />
+          )}
           {test.id === "combustion" && (
-            <CombustionTestPanel sampleLabel={sampleLabel} drops={session.combustionDrops} />
+            <CombustionTestPanel
+              sampleLabel={sampleLabel}
+              dropper={dropper}
+              onPick={onPickSample}
+            />
           )}
         </TestSection>
       ))}

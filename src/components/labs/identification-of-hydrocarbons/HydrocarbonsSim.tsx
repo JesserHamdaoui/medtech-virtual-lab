@@ -8,7 +8,7 @@ import TestSidebar from "./TestSidebar";
 import TestTube, { TestTubeLayer } from "./TestTube";
 import Toast from "./Toast";
 import UnityWorkbench from "./UnityWorkbench";
-import { UnityWorkbenchState } from "./unity/protocol";
+import { SAMPLE_PAYLOAD, UnityWorkbenchState } from "./unity/protocol";
 import WatchGlass from "./WatchGlass";
 import WorkbenchInfo from "./WorkbenchInfo";
 import WorkbenchToolbar from "./WorkbenchToolbar";
@@ -63,38 +63,15 @@ export default function HydrocarbonsSim() {
   /** All three unknowns side by side, rather than only the selected one. */
   const [splitView, setSplitView] = useState(false);
   /**
-   * What is currently being dragged, so the 3D vessels that can take it can
-   * outline themselves. Empty when nothing is held.
+   * Which dropper stands on the 3D bench — a reagent id, SAMPLE_PAYLOAD, or an
+   * empty string for none. Picking a bottle in the sidebar puts it there, and
+   * clicking the dropper in the canvas is what adds a drop.
    */
-  const [holding, setHolding] = useState("");
+  const [dropper, setDropper] = useState("");
 
-  // Drag events fire on the draggable elements, not on the canvas, so the held
-  // item is tracked at the document level and handed to Unity as state.
-  useEffect(() => {
-    const onDragStart = (event: DragEvent) => {
-      const types = event.dataTransfer?.types ?? [];
-      if (Array.from(types).includes("application/x-sample-dropper")) {
-        setHolding("sample");
-        return;
-      }
-
-      // Reagent ids are not readable from dataTransfer during dragstart in
-      // every browser, so the element's own marker is the reliable source.
-      const source = event.target as HTMLElement | null;
-      const reagentId = source?.closest("[data-reagent]")?.getAttribute("data-reagent");
-      if (reagentId) setHolding(reagentId);
-    };
-    const onDragEnd = () => setHolding("");
-
-    document.addEventListener("dragstart", onDragStart);
-    document.addEventListener("dragend", onDragEnd);
-    document.addEventListener("drop", onDragEnd);
-    return () => {
-      document.removeEventListener("dragstart", onDragStart);
-      document.removeEventListener("dragend", onDragEnd);
-      document.removeEventListener("drop", onDragEnd);
-    };
-  }, []);
+  /** Pressing the same bottle again takes its dropper off the bench. */
+  const pickDropper = (payload: string) =>
+    setDropper((current) => (current === payload ? "" : payload));
 
   const shake = (sampleId: SampleId, testId: TestId) => {
     if (shakeTimer.current) clearTimeout(shakeTimer.current);
@@ -133,6 +110,9 @@ export default function HydrocarbonsSim() {
     setIsShaking(false);
   };
 
+  /** Clears the bench of a dropper that belongs to the test or sample being left. */
+  const clearDropper = () => setDropper("");
+
   const unassign = (sampleId: SampleId) =>
     setAssignments((current) => {
       const next = { ...current };
@@ -142,6 +122,7 @@ export default function HydrocarbonsSim() {
 
   const resetSample = (sampleId: SampleId) => {
     unassign(sampleId);
+    clearDropper();
     setSessions((current) => ({
       ...current,
       [sampleId]: createEmptyTestSession(),
@@ -387,6 +368,21 @@ export default function HydrocarbonsSim() {
   const heatLevel = reagentOutcome?.heatLevel ?? "none";
   const canIgnite = openTest === "combustion" && activeSession.combustionDrops > 0;
 
+  // Drops already added for whatever the dropper on the bench is currently
+  // holding, so Unity can refuse to squeeze once that one thing hits its own
+  // limit — the sample dropper on its own count, a reagent on its own.
+  const dropperDrops =
+    dropper === SAMPLE_PAYLOAD
+      ? activeSession.combustionDrops
+      : (activeReagentDrops[dropper as ReagentId] ?? 0);
+
+  // The dropper is tinted with whatever it is holding, so the bench shows at a
+  // glance which reagent is about to go in.
+  const dropperTint =
+    dropper === SAMPLE_PAYLOAD || dropper === ""
+      ? SAMPLE_TUBE_COLOR
+      : (REAGENTS.find((r) => r.id === dropper)?.color ?? SAMPLE_TUBE_COLOR);
+
   // Everything the Unity workbench needs to draw the current bench. It is a
   // projection of the state above, never a second copy of it — the chemistry
   // stays here so the sidebar and the 3D bench can't disagree.
@@ -415,7 +411,9 @@ export default function HydrocarbonsSim() {
     () => ({
       layout: splitView ? "split" : "single",
       panes,
-      holding,
+      dropper,
+      dropperColor: dropperTint,
+      dropperDrops,
       test: openTest,
       sample: activeSample,
       layers: tubeLayers.map((layer) => ({ color: layer.color, height: layer.heightPx })),
@@ -430,7 +428,7 @@ export default function HydrocarbonsSim() {
       revision: ++revisionRef.current,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [splitView, panesKey, holding, openTest, activeSample, isShaking, heatLevel],
+    [splitView, panesKey, dropper, dropperTint, dropperDrops, openTest, activeSample, isShaking, heatLevel],
   );
 
   return (
@@ -440,6 +438,7 @@ export default function HydrocarbonsSim() {
           activeSample={activeSample}
           onSelect={(sampleId) => {
             stopShaking();
+            clearDropper();
             setActiveSample(sampleId);
           }}
           assignments={assignments}
@@ -457,9 +456,13 @@ export default function HydrocarbonsSim() {
           openTest={openTest}
           onToggleTest={(testId) => {
             stopShaking();
+            clearDropper();
             setOpenTest(testId);
           }}
           sampleLabel={SAMPLES.find((s) => s.id === activeSample)?.label ?? ""}
+          dropper={dropper}
+          onPickReagent={pickDropper}
+          onPickSample={() => pickDropper(SAMPLE_PAYLOAD)}
         />
 
         <div className="relative flex-1 min-h-[500px] border-2 border-[var(--sim-border)] bg-[var(--sim-panel-bg)] flex items-center justify-center">
@@ -476,6 +479,7 @@ export default function HydrocarbonsSim() {
             onSelectSample={(sampleId) => {
               if (sampleId === activeSample) return;
               stopShaking();
+              clearDropper();
               setActiveSample(sampleId);
             }}
             fallback={

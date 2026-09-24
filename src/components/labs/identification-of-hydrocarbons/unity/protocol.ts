@@ -37,10 +37,20 @@ export interface UnityWorkbenchState {
   layout: UnityWorkbenchLayout;
   panes: UnityWorkbenchPane[];
   /**
-   * What the user is dragging right now — a reagent id, SAMPLE_PAYLOAD, or an
-   * empty string. Vessels that can take it outline themselves while it is held.
+   * The reagent whose dropper stands on the 3D bench — a reagent id,
+   * SAMPLE_PAYLOAD, or an empty string for none. Picking one in the sidebar
+   * spawns it; clicking it in the canvas squeezes a droplet into the vessel.
    */
-  holding: string;
+  dropper: string;
+  /** Dropper tint, resolved to a literal colour Unity can parse. */
+  dropperColor: string;
+  /**
+   * Drops already added for whatever the dropper is currently holding — the
+   * reagent's own count for a reagent, or the sample's own for the sample
+   * dropper. Lets Unity refuse to squeeze once the limit is reached, instead
+   * of squirting a drop React would silently discard.
+   */
+  dropperDrops: number;
   test: TestId;
   sample: SampleId;
   layers: UnityWorkbenchLayer[];
@@ -59,9 +69,9 @@ export interface UnityWorkbenchState {
 
 /** What Unity sends back. Mirrors WorkbenchEventDto on the C# side. */
 export interface UnityWorkbenchEvent {
-  type: "ready" | "drop" | "pick";
+  type: "ready" | "drip";
   target: "tube" | "watchglass" | "none";
-  /** Which sample's bench was hit, so split panes stay independent. */
+  /** Which sample's bench the droplet landed on, so split panes stay separate. */
   sample: SampleId | "";
   payload: string;
   accepted: boolean;
@@ -72,10 +82,10 @@ export const UNITY_EVENT_NAME = "medtech:workbench";
 /** GameObject name the C# bridge lives on — SendMessage resolves by name. */
 export const UNITY_BRIDGE_OBJECT = "WorkbenchBridge";
 
-/** Drag payload used for the sample dropper, as opposed to a reagent id. */
+/** Dropper payload used for the sample itself, as opposed to a reagent id. */
 export const SAMPLE_PAYLOAD = "sample";
 
-export type DropPayload = ReagentId | typeof SAMPLE_PAYLOAD;
+export type DropperPayload = ReagentId | typeof SAMPLE_PAYLOAD | "";
 
 const MAX_VAR_HOPS = 4;
 
