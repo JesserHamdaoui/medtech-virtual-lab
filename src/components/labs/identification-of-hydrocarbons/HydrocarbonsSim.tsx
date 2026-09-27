@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import OutcomeCard from "./OutcomeCard";
 import SampleTabs from "./SampleTabs";
 import SampleTray from "./SampleTray";
 import TestSidebar from "./TestSidebar";
@@ -522,12 +521,6 @@ export default function HydrocarbonsSim() {
             canIgnite={canIgnite}
             onIgnite={() => igniteSample(activeSample)}
           />
-
-          {(reagentOutcome ?? waterOutcome ?? ligroinOutcome ?? combustionOutcome) && (
-            <OutcomeCard
-              outcome={(reagentOutcome ?? waterOutcome ?? ligroinOutcome ?? combustionOutcome)!}
-            />
-          )}
 
           {toastMessage && <Toast message={toastMessage} />}
         </div>
