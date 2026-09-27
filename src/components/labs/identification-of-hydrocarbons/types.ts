@@ -17,11 +17,19 @@ export interface TestProcedure {
   steps: string[];
 }
 
+export type TestCategory = "physical" | "chemical";
+
 export interface TestInfo {
   id: TestId;
   label: string;
+  category: TestCategory;
   procedures: TestProcedure[];
 }
+
+export const TEST_CATEGORY_LABELS: Record<TestCategory, string> = {
+  physical: "Physical Property",
+  chemical: "Chemical Property",
+};
 
 export type HydrocarbonId = "hexane" | "cyclohexene" | "toluene";
 
@@ -46,6 +54,7 @@ export const TESTS: TestInfo[] = [
   {
     id: "solubility",
     label: "Solubility Test",
+    category: "physical",
     procedures: [
       {
         title: "Solubility in Water",
@@ -68,6 +77,7 @@ export const TESTS: TestInfo[] = [
   {
     id: "bromine",
     label: "Bromine Test",
+    category: "chemical",
     procedures: [
       {
         title: "Bromine Test",
@@ -82,6 +92,7 @@ export const TESTS: TestInfo[] = [
   {
     id: "kmno4",
     label: "Potassium Permanganate Test",
+    category: "chemical",
     procedures: [
       {
         title: "Potassium Permanganate Test",
@@ -96,6 +107,7 @@ export const TESTS: TestInfo[] = [
   {
     id: "h2so4",
     label: "Sulfuric Acid Test",
+    category: "chemical",
     procedures: [
       {
         title: "Sulfuric Acid Test",
@@ -110,6 +122,7 @@ export const TESTS: TestInfo[] = [
   {
     id: "combustion",
     label: "Combustion Test",
+    category: "chemical",
     procedures: [
       {
         title: "Combustion Test",
@@ -233,6 +246,50 @@ export function testSessionHasActivity(
   if (testId === "h2so4") return session.h2so4 > 0;
   if (testId === "combustion") return session.combustionDrops > 0;
   return false;
+}
+
+/** Drop count the procedure calls for, per reagent test, before shaking. */
+export const TARGET_DROPS: Record<"bromine" | "kmno4" | "h2so4" | "water" | "ligroin", number> = {
+  bromine: 5,
+  kmno4: 5,
+  h2so4: 3,
+  water: 5,
+  ligroin: 5,
+};
+
+/**
+ * 0-1 completion for a test's progress bar. Reaching the target dose fills
+ * up to 80%; shaking (or igniting, for combustion) fills the remaining 20%
+ * of *that* dose fraction, so shaking with too few drops can't fake 100%,
+ * only reaching the target dose and then observing it can.
+ */
+export function getTestProgress(
+  session: TestSessionState | undefined,
+  testId: TestId,
+): number {
+  if (!session) return 0;
+
+  if (testId === "solubility") {
+    const reacted = session.reacted.solubility === true;
+    const waterFraction = Math.min(session.solubility.waterDrops / TARGET_DROPS.water, 1);
+    const ligroinFraction = Math.min(session.solubility.ligroinDrops / TARGET_DROPS.ligroin, 1);
+    const fraction = Math.max(waterFraction, ligroinFraction);
+    return fraction * (reacted ? 1 : 0.8);
+  }
+
+  if (testId === "bromine" || testId === "kmno4" || testId === "h2so4") {
+    const drops = session[testId];
+    const reacted = session.reacted[testId] === true;
+    const fraction = Math.min(drops / TARGET_DROPS[testId], 1);
+    return fraction * (reacted ? 1 : 0.8);
+  }
+
+  if (testId === "combustion") {
+    if (session.ignited) return 1;
+    return session.combustionDrops > 0 ? 0.5 : 0;
+  }
+
+  return 0;
 }
 
 export type HeatLevel = "none" | "noticeable" | "high";
