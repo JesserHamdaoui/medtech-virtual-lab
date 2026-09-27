@@ -131,6 +131,12 @@ export default function HydrocarbonsSim() {
 
   const addReagentDrop = (sampleId: SampleId, reagentId: ReagentId) => {
     const session = sessions[sampleId];
+    const testId: TestId = reagentId === "water" || reagentId === "ligroin" ? "solubility" : reagentId;
+
+    if (session.reacted[testId] === true) {
+      showToast("Already shaken. Reset the sample to run this test again.");
+      return;
+    }
 
     // Solubility test: water and ligroin are run in separate tubes per the
     // manual, so mixing them in this simulated single tube is disallowed.
@@ -197,6 +203,10 @@ export default function HydrocarbonsSim() {
 
   const addSampleDropToWatchGlass = (sampleId: SampleId) => {
     const session = sessions[sampleId];
+    if (session.ignited) {
+      showToast("Already ignited. Reset the sample to run this test again.");
+      return;
+    }
     if (session.combustionDrops >= MAX_DROPS_PER_REAGENT) {
       showToast(`Can't add more sample, maximum of ${MAX_DROPS_PER_REAGENT} drops reached.`);
       return;
@@ -208,7 +218,6 @@ export default function HydrocarbonsSim() {
         [sampleId]: {
           ...currentSession,
           combustionDrops: currentSession.combustionDrops + 1,
-          ignited: false,
         },
       };
     });
