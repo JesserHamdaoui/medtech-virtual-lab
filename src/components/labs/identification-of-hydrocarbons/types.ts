@@ -12,9 +12,15 @@ export interface SampleInfo {
   label: string;
 }
 
+export interface TestProcedure {
+  title: string;
+  steps: string[];
+}
+
 export interface TestInfo {
   id: TestId;
   label: string;
+  procedures: TestProcedure[];
 }
 
 export type HydrocarbonId = "hexane" | "cyclohexene" | "toluene";
@@ -37,11 +43,85 @@ export const SAMPLES: SampleInfo[] = [
 ];
 
 export const TESTS: TestInfo[] = [
-  { id: "solubility", label: "Solubility Test" },
-  { id: "bromine", label: "Bromine Test" },
-  { id: "kmno4", label: "Potassium Permanganate Test" },
-  { id: "h2so4", label: "Sulfuric Acid Test" },
-  { id: "combustion", label: "Combustion Test" },
+  {
+    id: "solubility",
+    label: "Solubility Test",
+    procedures: [
+      {
+        title: "Solubility in Water",
+        steps: [
+          "Add 5 drops of water.",
+          "Click MIX to shake the tube.",
+          "Observe whether the mixture forms one layer or two.",
+        ],
+      },
+      {
+        title: "Solubility in Petroleum Ether (Ligroin)",
+        steps: [
+          "Add 5 drops of petroleum ether (ligroin).",
+          "Click MIX to shake the tube.",
+          "Observe whether the mixture forms one layer or two.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "bromine",
+    label: "Bromine Test",
+    procedures: [
+      {
+        title: "Bromine Test",
+        steps: [
+          "Add 5 drops of bromine solution.",
+          "Click MIX to shake the tube.",
+          "Observe any color change.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "kmno4",
+    label: "Potassium Permanganate Test",
+    procedures: [
+      {
+        title: "Potassium Permanganate Test",
+        steps: [
+          "Add 5 drops of potassium permanganate (KMnO4) solution.",
+          "Click MIX to shake the tube.",
+          "Observe any color change.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "h2so4",
+    label: "Sulfuric Acid Test",
+    procedures: [
+      {
+        title: "Sulfuric Acid Test",
+        steps: [
+          "Add 5 drops of sulfuric acid (H2SO4).",
+          "Click MIX to shake the tube.",
+          "Observe the temperature and any reaction.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "combustion",
+    label: "Combustion Test",
+    procedures: [
+      {
+        title: "Combustion Test",
+        steps: [
+          "Select the unknown sample.",
+          "Place the sample onto the watch glass.",
+          "Click IGNITE.",
+          "Observe the flame and any smoke.",
+        ],
+      },
+    ],
+  },
 ];
 
 /**
@@ -164,8 +244,6 @@ export interface ReactionOutcome {
   label: string;
   /** Longer explanation of what's happening chemically. */
   detail: string;
-  /** Optional sediment/precipitate band drawn above the reacted layer. */
-  precipitateColor?: string;
   heatLevel?: HeatLevel;
   /** Solubility outcomes only: true once the reagent fully blends into the sample, so the tube should render one merged band instead of separate layers. */
   miscible?: boolean;
@@ -187,12 +265,12 @@ function bucketFor(test: TestId, drops: number): DropBucket {
 const SOLVENT_OUTCOMES: Record<"water" | "ligroin", Record<"faint" | "clear", ReactionOutcome>> = {
   water: {
     faint: {
-      tubeColor: "#cfeaf4",
+      tubeColor: "#9cc9e8",
       label: "Layers separate (faint)",
       detail: "Too little water to see the separation clearly yet.",
     },
     clear: {
-      tubeColor: "#cfeaf4",
+      tubeColor: "#4a90d9",
       label: "Two layers, immiscible",
       detail: "Clean heterogeneous separation. Nonpolar hydrocarbon doesn't mix with water.",
     },
@@ -243,17 +321,15 @@ const KMNO4_OUTCOMES: Record<HydrocarbonId, Record<"low" | "high", ReactionOutco
   },
   cyclohexene: {
     low: {
-      tubeColor: "#e8dfc8",
+      tubeColor: "#6b4a1f",
       label: "Positive, decolorized",
       detail: "Purple fully disappears and brown MnO₂ precipitate forms. Clean positive result.",
-      precipitateColor: "#6b4a1f",
     },
     high: {
       tubeColor: "#b483d6",
       label: "Ambiguous, excess KMnO₄ remains",
       detail:
         "Excess KMnO₄ stays unreacted, so the solution stays partly purple with only some brown precipitate, masking a true positive as ambiguous.",
-      precipitateColor: "#6b4a1f",
     },
   },
   toluene: {

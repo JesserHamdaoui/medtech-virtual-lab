@@ -1,5 +1,9 @@
 "use client";
 
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+
 const ML_PER_DROP = 0.05;
 
 interface AddedReagent {
@@ -49,9 +53,16 @@ export default function WorkbenchInfo({
   sampleDrops,
   addedReagents,
 }: WorkbenchInfoProps) {
+  const [isOpen, setIsOpen] = useState(true);
+
   return (
-    <div className="absolute top-0 left-0 flex flex-col gap-2 p-4 max-w-[24rem]">
-      <div className="flex items-center gap-2">
+    <div className="absolute top-4 left-4 flex flex-col max-w-[24rem] bg-[var(--sim-panel-bg)] border-2 border-[var(--sim-border)] shadow-[var(--sim-shadow-raised)]">
+      <button
+        type="button"
+        onClick={() => setIsOpen((v) => !v)}
+        aria-expanded={isOpen}
+        className="flex items-center gap-2 px-4 py-3 cursor-pointer hover:bg-[var(--sim-neutral-100)] transition-colors duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sim-accent-700)] focus-visible:ring-offset-[-2px]"
+      >
         <span className="text-sm font-bold tracking-wide text-[var(--sim-neutral-900)] uppercase">
           {sampleLabel}
         </span>
@@ -60,19 +71,25 @@ export default function WorkbenchInfo({
             {hydrocarbonLabel}
           </span>
         )}
-      </div>
+        <FontAwesomeIcon
+          icon={isOpen ? faChevronUp : faChevronDown}
+          className="ml-auto text-[var(--sim-accent-600)]"
+        />
+      </button>
 
-      <div className="flex flex-col gap-1">
-        <Reading label={sampleLabel} drops={sampleDrops} />
-        {addedReagents.map((reagent) => (
-          <Reading
-            key={reagent.label}
-            label={reagent.label}
-            drops={reagent.drops}
-            swatchColor={reagent.color}
-          />
-        ))}
-      </div>
+      {isOpen && (
+        <div className="flex flex-col gap-1 px-4 pb-4">
+          <Reading label={sampleLabel} drops={sampleDrops} />
+          {addedReagents.map((reagent) => (
+            <Reading
+              key={reagent.label}
+              label={reagent.label}
+              drops={reagent.drops}
+              swatchColor={reagent.color}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
