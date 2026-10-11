@@ -321,9 +321,19 @@
           "points": 8,
           "required": true,
           "tableConfig": {
-            "columns": ["q1", "q2", "r", "F21"],
+            "columns": [
+              "q1",
+              "q2",
+              "r",
+              "F21"
+            ],
             "rows": 6,
-            "headers": ["q1 (C)", "q2 (C)", "Distance r (m)", "Force F21 (N)"]
+            "headers": [
+              "q1 (C)",
+              "q2 (C)",
+              "Distance r (m)",
+              "Force F21 (N)"
+            ]
           }
         },
         {
@@ -362,7 +372,13 @@
           "points": 8,
           "required": true,
           "tableConfig": {
-            "columns": ["q1", "q2", "r", "1_over_r2", "F12"],
+            "columns": [
+              "q1",
+              "q2",
+              "r",
+              "1_over_r2",
+              "F12"
+            ],
             "rows": 6,
             "headers": [
               "$q_1$ (C)",
@@ -507,7 +523,14 @@
           "points": 6,
           "required": true,
           "tableConfig": {
-            "columns": ["m1", "m2", "v1", "v2", "v1_prime", "v2_prime"],
+            "columns": [
+              "m1",
+              "m2",
+              "v1",
+              "v2",
+              "v1_prime",
+              "v2_prime"
+            ],
             "rows": 5,
             "headers": [
               "$m_1$ (kg)",
@@ -531,7 +554,14 @@
           "points": 6,
           "required": true,
           "tableConfig": {
-            "columns": ["m1", "m2", "v1", "v2", "v1_prime", "v2_prime"],
+            "columns": [
+              "m1",
+              "m2",
+              "v1",
+              "v2",
+              "v1_prime",
+              "v2_prime"
+            ],
             "rows": 5,
             "headers": [
               "$m_1$ (kg)",
@@ -591,7 +621,13 @@
           "points": 6,
           "required": true,
           "tableConfig": {
-            "columns": ["m1", "m2", "v1", "v2", "v_prime"],
+            "columns": [
+              "m1",
+              "m2",
+              "v1",
+              "v2",
+              "v_prime"
+            ],
             "rows": 5,
             "headers": [
               "$m_1$ (kg)",
@@ -614,7 +650,13 @@
           "points": 6,
           "required": true,
           "tableConfig": {
-            "columns": ["m1", "m2", "v1", "v2", "v_prime"],
+            "columns": [
+              "m1",
+              "m2",
+              "v1",
+              "v2",
+              "v_prime"
+            ],
             "rows": 5,
             "headers": [
               "$m_1$ (kg)",
@@ -673,9 +715,15 @@
           "points": 6,
           "required": true,
           "tableConfig": {
-            "columns": ["v1", "v2_prime"],
+            "columns": [
+              "v1",
+              "v2_prime"
+            ],
             "rows": 8,
-            "headers": ["$v_1$ (m/s)", "$v_2'$ (m/s)"]
+            "headers": [
+              "$v_1$ (m/s)",
+              "$v_2'$ (m/s)"
+            ]
           }
         },
         {
@@ -741,420 +789,6 @@
           "responseFormat": "Open-ended / Explanation",
           "sourceLabel": "Conclusion",
           "points": 8,
-          "required": true
-        }
-      ]
-    },
-    {
-      "id": "identification-of-hydrocarbons",
-      "title": "Identification of Hydrocarbons",
-      "labTitle": "Experiment 2. Identification of hydrocarbons",
-      "description": "Investigate the physical and chemical properties of hydrocarbons — solubility, density, combustion, and reactivity toward bromine, potassium permanganate, and sulfuric acid — to distinguish an alkane, an alkene, and an aromatic compound, then use those properties to identify three unknowns.",
-      "thumbnail": "/images/thumbnail_identification_of_hydrocarbons.png",
-      "category": "chemistry",
-      "difficulty": "Intermediate",
-      "duration": "90 min",
-      "topics": [
-        "Hydrocarbons",
-        "Alkanes",
-        "Alkenes",
-        "Aromatic Compounds",
-        "Solubility",
-        "Combustion",
-        "Bromine Test",
-        "KMnO4 Test"
-      ],
-      "tags": [
-        "Hydrocarbons",
-        "Alkanes",
-        "Alkenes",
-        "Aromatic Compounds",
-        "Solubility",
-        "Combustion",
-        "Bromine Test",
-        "KMnO4 Test",
-        "Unknown Identification"
-      ],
-      "objectives": [
-        "Investigate the physical properties, solubility and density, of some hydrocarbons",
-        "Compare the chemical reactivity of an alkane, an alkene, and an aromatic compound",
-        "Use physical and chemical properties to identify an unknown"
-      ],
-      "metadata": {
-        "sourceTitle": "Experiment 2. Identification of hydrocarbons",
-        "course": "CHEM LABS / MEDTECH CHEMISTRY LABS",
-        "level": "Freshman",
-        "institution": "SMU, MedTech"
-      },
-      "questions": [
-        {
-          "id": "hydrocarbons-prelab-1",
-          "labId": "identification-of-hydrocarbons",
-          "type": "text",
-          "title": "Bonding and Reactivity of Hydrocarbon Classes",
-          "description": "Describe the differences between alkanes, alkenes, alkynes, and aromatic hydrocarbons in terms of bonding and general chemical reactivity.",
-          "instruction": "Cover bond type (single/double/triple/aromatic sextet) and general reactivity for each class.",
-          "responseFormat": "Open-ended / Explanation",
-          "sourceLabel": "Pre-Lab 1",
-          "points": 5,
-          "required": true
-        },
-        {
-          "id": "hydrocarbons-prelab-2",
-          "labId": "identification-of-hydrocarbons",
-          "type": "text",
-          "title": "Density and Solubility of Hydrocarbons",
-          "description": "Why do hydrocarbons generally float on water, and what does this indicate about their density? How does their solubility differ in polar versus nonpolar solvents?",
-          "instruction": "Relate nonpolar character to solubility behavior and to relative density versus water.",
-          "responseFormat": "Open-ended / Explanation",
-          "sourceLabel": "Pre-Lab 2",
-          "points": 5,
-          "required": true
-        },
-        {
-          "id": "hydrocarbons-prelab-3",
-          "labId": "identification-of-hydrocarbons",
-          "type": "text",
-          "title": "Industrial Synthesis of Hydrocarbons",
-          "description": "What are common industrial methods for synthesizing alkanes, alkenes, and aromatic hydrocarbons? Provide one example reaction for each type.",
-          "instruction": "Give one example reaction per class (alkane, alkene, aromatic).",
-          "responseFormat": "Open-ended / Explanation",
-          "sourceLabel": "Pre-Lab 3",
-          "points": 6,
-          "required": true
-        },
-        {
-          "id": "hydrocarbons-q1",
-          "labId": "identification-of-hydrocarbons",
-          "type": "table",
-          "title": "Physical Properties of Hydrocarbons",
-          "description": "For each hydrocarbon, record solubility (mix/soluble or not mix/insoluble) and relative density in water and in ligroin.",
-          "instruction": "Fill in solubility and density observations for hexane, cyclohexene, toluene, and unknowns A, B, C in both water and ligroin.",
-          "responseFormat": "Table filling",
-          "sourceLabel": "Physical Properties",
-          "points": 12,
-          "required": true,
-          "tableConfig": {
-            "columns": [
-              "hydrocarbon",
-              "h2o_solubility",
-              "h2o_density",
-              "ligroin_solubility",
-              "ligroin_density"
-            ],
-            "rows": 6,
-            "headers": [
-              "Hydrocarbon",
-              "H2O Solubility",
-              "H2O Density",
-              "Ligroin Solubility",
-              "Ligroin Density"
-            ]
-          }
-        },
-        {
-          "id": "hydrocarbons-q2",
-          "labId": "identification-of-hydrocarbons",
-          "type": "table",
-          "title": "Chemical Properties of Hydrocarbons",
-          "description": "For each hydrocarbon, record observations for the combustion, bromine, KMnO4, and H2SO4 tests.",
-          "instruction": "Fill in observations for hexane, cyclohexene, toluene, and unknowns A, B, C across all four chemical tests.",
-          "responseFormat": "Table filling",
-          "sourceLabel": "Chemical Properties",
-          "points": 16,
-          "required": true,
-          "tableConfig": {
-            "columns": [
-              "hydrocarbon",
-              "combustion",
-              "bromine_test",
-              "kmno4_test",
-              "h2so4_test"
-            ],
-            "rows": 6,
-            "headers": [
-              "Hydrocarbon",
-              "Combustion",
-              "Bromine Test",
-              "KMnO4 Test",
-              "H2SO4 Test"
-            ]
-          }
-        },
-        {
-          "id": "hydrocarbons-q3",
-          "labId": "identification-of-hydrocarbons",
-          "type": "text",
-          "title": "Identity of Unknown A",
-          "description": "Based on your physical and chemical property observations, identify Unknown A.",
-          "instruction": "State whether Unknown A is hexane (alkane), cyclohexene (alkene), or toluene (aromatic), and justify using your data.",
-          "responseFormat": "Open-ended / Identification",
-          "sourceLabel": "Unknown Identification",
-          "points": 4,
-          "required": true
-        },
-        {
-          "id": "hydrocarbons-q4",
-          "labId": "identification-of-hydrocarbons",
-          "type": "text",
-          "title": "Identity of Unknown B",
-          "description": "Based on your physical and chemical property observations, identify Unknown B.",
-          "instruction": "State whether Unknown B is hexane (alkane), cyclohexene (alkene), or toluene (aromatic), and justify using your data.",
-          "responseFormat": "Open-ended / Identification",
-          "sourceLabel": "Unknown Identification",
-          "points": 4,
-          "required": true
-        },
-        {
-          "id": "hydrocarbons-q5",
-          "labId": "identification-of-hydrocarbons",
-          "type": "text",
-          "title": "Identity of Unknown C",
-          "description": "Based on your physical and chemical property observations, identify Unknown C.",
-          "instruction": "State whether Unknown C is hexane (alkane), cyclohexene (alkene), or toluene (aromatic), and justify using your data.",
-          "responseFormat": "Open-ended / Identification",
-          "sourceLabel": "Unknown Identification",
-          "points": 4,
-          "required": true
-        },
-        {
-          "id": "hydrocarbons-postlab-1",
-          "labId": "identification-of-hydrocarbons",
-          "type": "text",
-          "title": "Predict Major Products (or NR)",
-          "description": "Write the structure of the major organic product for each reaction below; if no reaction, write NR.\na. $CH_3\\text{-}CH{=}CH_2 + Br_2$\nb. cyclohexane $+ KMnO_4 + H_2O$\nc. $CH_3\\text{-}CH{=}CH\\text{-}CH_3 + H_2SO_4$\nd. benzene $+ KMnO_4$",
-          "instruction": "Give the product (or NR) for each of the four reactions, with brief reasoning based on bond type.",
-          "responseFormat": "Open-ended / Structures",
-          "sourceLabel": "Post-Lab 1",
-          "points": 8,
-          "required": true
-        },
-        {
-          "id": "hydrocarbons-postlab-2",
-          "labId": "identification-of-hydrocarbons",
-          "type": "text",
-          "title": "Predicting Properties of Octane",
-          "description": "Octane is an unbranched alkane of formula C8H18. Based on your observations in this experiment, predict: (a) solubility in water, (b) solubility in ligroin, (c) combustion characteristics, (d) density versus water.",
-          "instruction": "Answer all four parts (a–d) based on alkane behavior observed for hexane.",
-          "responseFormat": "Open-ended / Prediction",
-          "sourceLabel": "Post-Lab 2",
-          "points": 6,
-          "required": true
-        },
-        {
-          "id": "hydrocarbons-postlab-3",
-          "labId": "identification-of-hydrocarbons",
-          "type": "text",
-          "title": "Predicting Properties of Hexene",
-          "description": "Hexene is an alkene. Based on your observations in this experiment, what should you expect to see for this compound in: (a) the bromine test, (b) the KMnO4 test, (c) combustion?",
-          "instruction": "Answer all three parts (a–c) based on alkene behavior observed for cyclohexene.",
-          "responseFormat": "Open-ended / Prediction",
-          "sourceLabel": "Post-Lab 3",
-          "points": 5,
-          "required": true
-        }
-      ]
-    },
-    {
-      "id": "calorimetry",
-      "title": "Calorimetry",
-      "labTitle": "Experiment 4. Calorimetry",
-      "description": "Measure heat changes at constant pressure and constant volume using a coffee-cup calorimeter and a tin-can biomass calorimeter, then calculate the specific heat capacities of metals and the energy released by burning biomass fuels.",
-      "thumbnail": "/images/thumbnail_calorimetry.png",
-      "category": "chemistry",
-      "difficulty": "Intermediate",
-      "duration": "90 min",
-      "topics": [
-        "Calorimetry",
-        "Heat Transfer",
-        "Specific Heat",
-        "Constant Pressure",
-        "Constant Volume",
-        "Thermal Equilibrium",
-        "Biomass Combustion",
-        "Enthalpy"
-      ],
-      "tags": [
-        "Calorimetry",
-        "Heat",
-        "Specific Heat Capacity",
-        "Thermochemistry",
-        "Coffee Cup Calorimeter",
-        "Biomass",
-        "Enthalpy"
-      ],
-      "objectives": [
-        "Understand the basics of calorimetry in different setups",
-        "Measure the heat change during a reaction or process at both constant pressure and constant volume",
-        "Calculate the specific heat capacities of metals and the energy changes in water"
-      ],
-      "metadata": {
-        "sourceTitle": "Experiment 4. Calorimetry",
-        "course": "CHEM LABS / MEDTECH CHEMISTRY LABS",
-        "level": "Freshman",
-        "institution": "SMU, MedTech"
-      },
-      "questions": [
-        {
-          "id": "calorimetry-prelab-1",
-          "labId": "calorimetry",
-          "type": "text",
-          "title": "Purpose of a Calorimeter",
-          "description": "What is the purpose of a calorimeter in an experiment?",
-          "instruction": "Explain what a calorimeter measures and why that measurement matters.",
-          "responseFormat": "Open-ended / Explanation",
-          "sourceLabel": "Pre-Lab 1",
-          "points": 5,
-          "required": true
-        },
-        {
-          "id": "calorimetry-prelab-2",
-          "labId": "calorimetry",
-          "type": "text",
-          "title": "Conservation of Energy in Calorimetry",
-          "description": "How does the law of conservation of energy apply to calorimetry?",
-          "instruction": "Relate heat lost by one component to heat gained by another within an isolated system.",
-          "responseFormat": "Open-ended / Explanation",
-          "sourceLabel": "Pre-Lab 2",
-          "points": 5,
-          "required": true
-        },
-        {
-          "id": "calorimetry-prelab-3",
-          "labId": "calorimetry",
-          "type": "text",
-          "title": "Calculating Enthalpy Change from Calorimetry Data",
-          "description": "How do you use calorimetry data to calculate the enthalpy change (ΔH) of a reaction?",
-          "instruction": "Describe how q = m × s × ΔT connects measured temperature change to ΔH.",
-          "responseFormat": "Open-ended / Explanation",
-          "sourceLabel": "Pre-Lab 3",
-          "points": 6,
-          "required": true
-        },
-        {
-          "id": "calorimetry-q1",
-          "labId": "calorimetry",
-          "type": "table",
-          "title": "Part A: Constant Pressure Calorimetry (Metals)",
-          "description": "For each metal sample (M1, M2, M3), record initial mass, initial and final temperature, final mass, observations, and calculated heat q.",
-          "instruction": "Fill in the data table for each metal sample used in the coffee-cup calorimeter.",
-          "responseFormat": "Table filling",
-          "sourceLabel": "Data Table - Part A",
-          "points": 15,
-          "required": true,
-          "tableConfig": {
-            "columns": [
-              "sample",
-              "initial_mass",
-              "t_initial",
-              "t_final",
-              "final_mass",
-              "observation",
-              "q"
-            ],
-            "rows": 3,
-            "headers": [
-              "Sample",
-              "Initial Mass",
-              "T°i",
-              "T°f",
-              "Final Mass",
-              "Observation",
-              "q"
-            ]
-          }
-        },
-        {
-          "id": "calorimetry-q2",
-          "labId": "calorimetry",
-          "type": "table",
-          "title": "Part B: Constant Volume Calorimetry (Biomass)",
-          "description": "For each biomass fuel sample, record initial mass, initial and final water temperature, final mass, observations, and calculated heat q.",
-          "instruction": "Fill in the data table for each biomass sample burned in the tin-can calorimeter.",
-          "responseFormat": "Table filling",
-          "sourceLabel": "Data Table - Part B",
-          "points": 15,
-          "required": true,
-          "tableConfig": {
-            "columns": [
-              "sample",
-              "initial_mass",
-              "t_initial",
-              "t_final",
-              "final_mass",
-              "observation",
-              "q"
-            ],
-            "rows": 2,
-            "headers": [
-              "Sample",
-              "Initial Mass",
-              "T°i",
-              "T°f",
-              "Final Mass",
-              "Observation",
-              "q"
-            ]
-          }
-        },
-        {
-          "id": "calorimetry-postlab-1",
-          "labId": "calorimetry",
-          "type": "text",
-          "title": "Specific Heat of the Metals",
-          "description": "Calculate and compare the amount of specific heat ‘s’ for the different metals (specific heat of water = 4.184 J/g-K).",
-          "instruction": "Show the calculation for each metal and compare the resulting specific heats.",
-          "responseFormat": "Open-ended / Calculation",
-          "sourceLabel": "Post-Lab 1",
-          "points": 8,
-          "required": true
-        },
-        {
-          "id": "calorimetry-postlab-2",
-          "labId": "calorimetry",
-          "type": "text",
-          "title": "Purpose of Stirring",
-          "description": "Why is it necessary to stir the contents of the calorimeter during the experiment?",
-          "instruction": "Explain how stirring affects temperature uniformity and measurement accuracy.",
-          "responseFormat": "Open-ended / Explanation",
-          "sourceLabel": "Post-Lab 2",
-          "points": 4,
-          "required": true
-        },
-        {
-          "id": "calorimetry-postlab-3",
-          "labId": "calorimetry",
-          "type": "text",
-          "title": "Comparing Measured and Literature Specific Heats",
-          "description": "Compare the calculated specific heats to literature values. What factors could contribute to any discrepancies?",
-          "instruction": "Discuss sources of experimental error such as heat loss, incomplete thermal equilibrium, or calorimeter heat capacity.",
-          "responseFormat": "Open-ended / Analysis",
-          "sourceLabel": "Post-Lab 3",
-          "points": 6,
-          "required": true
-        },
-        {
-          "id": "calorimetry-postlab-4",
-          "labId": "calorimetry",
-          "type": "text",
-          "title": "Minimizing Heat Loss",
-          "description": "Describe how you could modify the experimental setup to minimize heat loss to the surroundings.",
-          "instruction": "Suggest at least one concrete modification to the calorimeter setup.",
-          "responseFormat": "Open-ended / Explanation",
-          "sourceLabel": "Post-Lab 4",
-          "points": 4,
-          "required": true
-        },
-        {
-          "id": "calorimetry-postlab-5",
-          "labId": "calorimetry",
-          "type": "text",
-          "title": "Real-Life Application of Calorimetry",
-          "description": "Describe a real-life application where calorimetry is used and explain why understanding enthalpy or internal energy changes is important in that context.",
-          "instruction": "Give one concrete real-world example and connect it to enthalpy or internal energy.",
-          "responseFormat": "Open-ended / Application",
-          "sourceLabel": "Post-Lab 5",
-          "points": 5,
           "required": true
         }
       ]
