@@ -36,8 +36,8 @@ interface StationCanvasProps {
 
 /**
  * Bench canvas for the active station. Unity draws the station's apparatus
- * underneath, with a header on top, the inventory down the left and the
- * instrument dock along the bottom. A material dragged in from the inventory is set on the
+ * between a header on top and the instrument dock along the bottom, with the
+ * inventory down its left side. A material dragged in from the inventory is set on the
  * station — on the scale pan, into the beaker or cup, onto the plate or
  * under the can — and Unity draws it there. It only lands when let go over
  * the apparatus itself, which Unity outlines while the sample is held over it. On the balance, the scale's LCD
@@ -96,14 +96,12 @@ export default function StationCanvas({
           onPlaceSample(materialId);
         }
       }}
-      className={`relative flex-1 min-h-[500px] border-2 bg-[var(--sim-panel-bg)] flex flex-col items-center justify-center gap-3 p-8 text-center transition-colors duration-100 ${
+      className={`relative flex-1 min-h-[520px] border-2 bg-[var(--sim-panel-bg)] flex flex-col transition-colors duration-100 ${
         isDragOver
           ? "border-[var(--sim-accent-700)] outline outline-2 outline-dashed outline-[var(--sim-accent-900)] outline-offset-[-4px]"
           : "border-[var(--sim-border)]"
       }`}
     >
-      <CalorimetryUnity snapshot={snapshot} probeRef={probeRef} onHeaterToggle={onHeaterToggle} />
-
       <StationHeader
         label={station.label}
         instruction={status.instruction}
@@ -112,6 +110,11 @@ export default function StationCanvas({
         onReset={onReset}
         resetDisabled={resetDisabled}
       />
+
+      <div className="relative flex-1 min-h-0">
+        <CalorimetryUnity snapshot={snapshot} probeRef={probeRef} onHeaterToggle={onHeaterToggle} />
+        <MaterialInventory materials={materials} inUseIds={inUse} />
+      </div>
 
       <InstrumentDock status={status}>
         <DockActions
@@ -123,8 +126,6 @@ export default function StationCanvas({
           onRemoveSample={onRemoveSample}
         />
       </InstrumentDock>
-
-      <MaterialInventory materials={materials} inUseIds={inUse} />
     </div>
   );
 }

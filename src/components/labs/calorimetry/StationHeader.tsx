@@ -11,7 +11,7 @@ interface StationHeaderProps {
   resetDisabled: boolean;
 }
 
-/** The slim bar along the top of the canvas: where the student is and what to do next. */
+/** The slim bar above the 3D bench: where the student is and what to do next. */
 export default function StationHeader({
   label,
   instruction,
@@ -21,7 +21,7 @@ export default function StationHeader({
   resetDisabled,
 }: StationHeaderProps) {
   return (
-    <div className="absolute top-0 inset-x-0 flex items-center gap-4 border-b-2 border-[var(--sim-border)] bg-[var(--sim-neutral-0)] px-4 py-2 text-left">
+    <div className="flex items-center gap-4 border-b-2 border-[var(--sim-border)] bg-[var(--sim-neutral-0)] px-4 py-2 text-left">
       <div className="flex flex-col min-w-0 flex-1">
         <span className="text-xs font-bold tracking-widest uppercase text-[var(--sim-label)]">
           {label}

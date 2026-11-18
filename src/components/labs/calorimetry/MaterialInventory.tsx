@@ -9,8 +9,7 @@ interface MaterialInventoryProps {
 }
 
 /**
- * Bench inventory, a rail down the left side of the canvas between the header
- * and the dock, listing
+ * Bench inventory, a rail down the left side of the 3D bench, listing
  * the materials available for the active section as draggable cases — each
  * one a picture of the sample rendered from its Unity model, dragged onto a
  * station to use it. Drop handling lives on the station that wants it.
@@ -20,7 +19,7 @@ interface MaterialInventoryProps {
  */
 export default function MaterialInventory({ materials, inUseIds = [] }: MaterialInventoryProps) {
   return (
-    <div className="absolute left-3 top-20 bottom-24 flex flex-col justify-center gap-2 pointer-events-none">
+    <div className="absolute left-3 top-3 bottom-3 flex flex-col justify-center gap-2 pointer-events-none">
       {materials.map((material) => {
         const inUse = inUseIds.includes(material.id);
 

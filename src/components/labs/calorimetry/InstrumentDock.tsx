@@ -11,13 +11,13 @@ interface InstrumentDockProps {
 }
 
 /**
- * The one strip along the bottom of the canvas: the station's main reading,
+ * The one strip below the 3D bench: the station's main reading,
  * the smaller values beside it, where it is at, and what can be done. It
  * keeps one height on every station so nothing moves when the tab changes.
  */
 export default function InstrumentDock({ status, children }: InstrumentDockProps) {
   return (
-    <div className="absolute bottom-0 inset-x-0 min-h-20 flex flex-wrap items-center gap-x-6 gap-y-2 border-t-2 border-[var(--sim-border)] bg-[var(--sim-neutral-0)] px-4 py-2">
+    <div className="min-h-20 flex flex-wrap items-center gap-x-6 gap-y-2 border-t-2 border-[var(--sim-border)] bg-[var(--sim-neutral-0)] px-4 py-2">
       <PrimaryReadout {...status.primary} />
       <div className="flex flex-wrap items-center gap-x-5 gap-y-1 flex-1 min-w-0 border-l-2 border-[var(--sim-border-subtle)] pl-5">
         {status.stats.map((stat) => (
