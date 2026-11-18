@@ -1,5 +1,6 @@
 "use client";
 
+import ProgressBar from "./ProgressBar";
 import TabDot from "./TabDot";
 import { CALORIMETRY_SECTIONS, CalorimetrySection } from "./types";
 
@@ -7,10 +8,12 @@ interface SectionTabsProps {
   activeSection: CalorimetrySection;
   /** The sections that have a sample on one of their stations. */
   occupied: CalorimetrySection[];
+  /** Each section's progress, 0..1. */
+  progress: Record<CalorimetrySection, number>;
   onSelect: (section: CalorimetrySection) => void;
 }
 
-export default function SectionTabs({ activeSection, occupied, onSelect }: SectionTabsProps) {
+export default function SectionTabs({ activeSection, occupied, progress, onSelect }: SectionTabsProps) {
   return (
     <div className="flex border-b-2 border-[var(--sim-border)] bg-[var(--sim-neutral-50)]">
       {CALORIMETRY_SECTIONS.map((section) => {
@@ -37,6 +40,7 @@ export default function SectionTabs({ activeSection, occupied, onSelect }: Secti
             >
               {section.subtitle}
             </span>
+            <ProgressBar value={progress[section.id]} onActive={isActive} />
           </button>
         );
       })}
