@@ -31,3 +31,10 @@ export function ticksOf(axis: Axis): number[] {
   for (let v = axis.min; v <= axis.max + axis.step / 2; v += axis.step) out.push(Number(v.toFixed(6)));
   return out;
 }
+
+/** Tick values inside [min, max] on multiples of step, for an axis that has been zoomed to a range. */
+export function tickValues(min: number, max: number, step: number): number[] {
+  const out: number[] = [];
+  for (let v = Math.ceil(min / step) * step; v <= max + step / 1000; v += step) out.push(Number(v.toFixed(6)));
+  return out;
+}

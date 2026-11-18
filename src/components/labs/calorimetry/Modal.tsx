@@ -11,6 +11,8 @@ interface ModalProps {
   title: string;
   /** One line under the title. */
   description?: string;
+  /** How wide the dialog may grow. */
+  size?: "md" | "lg";
   onClose: () => void;
   children: ReactNode;
 }
@@ -21,7 +23,7 @@ interface ModalProps {
  * it, Tab stays inside it, the page behind stops scrolling, and focus goes
  * back to where it was when it closes.
  */
-export default function Modal({ title, description, onClose, children }: ModalProps) {
+export default function Modal({ title, description, size = "md", onClose, children }: ModalProps) {
   const titleId = useId();
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef(onClose);
@@ -78,7 +80,7 @@ export default function Modal({ title, description, onClose, children }: ModalPr
         aria-modal="true"
         aria-labelledby={titleId}
         tabIndex={-1}
-        className="flex w-full max-w-3xl max-h-[90vh] flex-col border-2 border-[var(--sim-border)] bg-[var(--sim-neutral-0)] shadow-2xl focus:outline-none"
+        className={`flex w-full ${size === "lg" ? "max-w-5xl" : "max-w-3xl"} max-h-[90vh] flex-col border-2 border-[var(--sim-border)] bg-[var(--sim-neutral-0)] shadow-2xl focus:outline-none`}
       >
         <header className="flex items-start gap-4 border-b-2 border-[var(--sim-border)] bg-[var(--sim-neutral-50)] px-5 py-4">
           <div className="flex min-w-0 flex-1 flex-col gap-1">

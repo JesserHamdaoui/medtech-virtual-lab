@@ -1,4 +1,5 @@
 import { GraphSample, GraphSeries } from "./graphHistory";
+import { linePath } from "./graphPath";
 import { Axis, niceAxis, ticksOf } from "./graphScale";
 
 const WIDTH = 280;
@@ -12,27 +13,6 @@ const MIN_DEGREES = 10;
 interface LiveGraphProps {
   series: GraphSeries[];
   samples: GraphSample[];
-}
-
-/** SVG path for one series. A missing value lifts the pen, so a metal that leaves a station breaks its line. */
-function pathOf(
-  samples: GraphSample[],
-  key: GraphSeries["key"],
-  x: (t: number) => number,
-  y: (v: number) => number,
-): string {
-  let d = "";
-  let pen = false;
-  for (const sample of samples) {
-    const value = sample[key];
-    if (value === null) {
-      pen = false;
-      continue;
-    }
-    d += `${pen ? "L" : "M"}${x(sample.t).toFixed(1)} ${y(value).toFixed(1)}`;
-    pen = true;
-  }
-  return d;
 }
 
 /** A temperature against time chart, drawn from the recorded samples. */
@@ -73,7 +53,7 @@ export default function LiveGraph({ series, samples }: LiveGraphProps) {
         °C
       </text>
       {series.map((line) => (
-        <path key={line.key} d={pathOf(samples, line.key, x, y)} fill="none" stroke={line.color} strokeWidth="2" strokeLinejoin="round" />
+        <path key={line.key} d={linePath(samples, line.key, x, y)} fill="none" stroke={line.color} strokeWidth="2" strokeLinejoin="round" />
       ))}
     </svg>
   );

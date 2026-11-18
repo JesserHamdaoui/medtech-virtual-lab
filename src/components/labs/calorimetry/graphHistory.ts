@@ -30,20 +30,22 @@ export interface GraphSeries {
 /** The most samples kept, so a long session can't grow without bound. */
 export const MAX_SAMPLES = 7200;
 
-const WATER_COLOR = "var(--sim-accent-500)";
-const METAL_COLOR = "#e8590c";
+/** Every plotted line, each with its own colour so they can share one chart. */
+export const ALL_GRAPH_SERIES: GraphSeries[] = [
+  { key: "bath", label: "Bath water", color: "var(--sim-accent-500)" },
+  { key: "metalBath", label: "Metal in bath", color: "#e8590c" },
+  { key: "cup", label: "Cup water", color: "#7048e8" },
+  { key: "metalCup", label: "Metal in cup", color: "#c2255c" },
+  { key: "flask", label: "Flask water", color: "#2f9e44" },
+];
+
+const seriesOf = (...keys: GraphKey[]) => ALL_GRAPH_SERIES.filter((series) => keys.includes(series.key));
 
 /** What each station plots. A station missing here has nothing to plot. */
 const SERIES_BY_STATION: Record<string, GraphSeries[]> = {
-  [BATH_STATION]: [
-    { key: "bath", label: "Bath", color: WATER_COLOR },
-    { key: "metalBath", label: "Metal", color: METAL_COLOR },
-  ],
-  [CUP_STATION]: [
-    { key: "cup", label: "Cup water", color: WATER_COLOR },
-    { key: "metalCup", label: "Metal", color: METAL_COLOR },
-  ],
-  "tin-can-calorimeter": [{ key: "flask", label: "Flask water", color: WATER_COLOR }],
+  [BATH_STATION]: seriesOf("bath", "metalBath"),
+  [CUP_STATION]: seriesOf("cup", "metalCup"),
+  "tin-can-calorimeter": seriesOf("flask"),
 };
 
 export function graphSeriesFor(stationId: string): GraphSeries[] {
