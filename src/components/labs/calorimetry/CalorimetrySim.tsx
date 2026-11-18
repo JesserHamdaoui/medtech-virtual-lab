@@ -110,6 +110,8 @@ export default function CalorimetrySim() {
         <StationCanvas
           section={activeSection}
           station={station}
+          stepIndex={stations.indexOf(station)}
+          stepCount={stations.length}
           materials={materials}
           bench={bench}
           snapshot={snapshot}
@@ -117,17 +119,9 @@ export default function CalorimetrySim() {
           onRemoveSample={removeSample}
           onHeaterToggle={toggleHeater}
           onIgnite={igniteSample}
+          onReset={resetBench}
+          resetDisabled={bench === INITIAL_BENCH}
         />
-        <div className="mt-2 flex justify-end">
-          <button
-            type="button"
-            onClick={resetBench}
-            disabled={bench === INITIAL_BENCH}
-            className="border-2 border-[var(--sim-border)] bg-[var(--sim-neutral-0)] px-2.5 py-1 text-xs font-bold tracking-widest uppercase text-[var(--sim-neutral-900)] enabled:hover:border-[var(--sim-accent-700)] disabled:cursor-not-allowed disabled:text-[var(--sim-neutral-500)] disabled:bg-[var(--sim-neutral-50)]"
-          >
-            Reset bench
-          </button>
-        </div>
       </div>
     </div>
   );
