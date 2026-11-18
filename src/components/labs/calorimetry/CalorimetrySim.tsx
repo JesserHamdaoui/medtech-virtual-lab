@@ -15,18 +15,19 @@ import {
   getMaterialsFor,
   getStationsFor,
   ignite,
-  stepBench,
+  advanceBench,
   syncCup,
   uncover,
 } from "./types";
 import { DEFAULT_LAB_SETTINGS, LabSettings } from "./labSettings";
+import { DEFAULT_SIM_SPEED, SimSpeed } from "./simSpeed";
 import { recordProgress, sectionProgress } from "./progress";
 import { toUnitySnapshot } from "./unityState";
 import { useGraphHistory } from "./useGraphHistory";
 
 /** How often the bench is advanced, ms. */
 const TICK_MS = 100;
-/** The most one tick may advance the bench, s. */
+/** The most real time one tick may advance the bench by, s, before the speed multiplies it. */
 const MAX_STEP_SECONDS = 1;
 
 export default function CalorimetrySim() {
@@ -38,7 +39,8 @@ export default function CalorimetrySim() {
   // reset puts the bench back to exactly that object.
   const [setup, setSetup] = useState({ settings: DEFAULT_LAB_SETTINGS, initial: INITIAL_BENCH });
   const [bench, setBench] = useState<CalorimetryBench>(setup.initial);
-  const samples = useGraphHistory(bench, setup.initial);
+  const [speed, setSpeed] = useState<SimSpeed>(DEFAULT_SIM_SPEED);
+  const samples = useGraphHistory(bench, setup.initial, speed);
 
   // Every change to the bench goes through here, so progress is recorded as it happens.
   const update = useCallback((change: (prev: CalorimetryBench) => CalorimetryBench) => {
@@ -116,12 +118,12 @@ export default function CalorimetrySim() {
       // Real elapsed time, so the bench keeps pace when the browser throttles
       // the timer in a background tab. Capped, so a long sleep can't jump it.
       const now = performance.now();
-      const dt = Math.min(MAX_STEP_SECONDS, (now - last) / 1000);
+      const dt = Math.min(MAX_STEP_SECONDS, (now - last) / 1000) * speed;
       last = now;
-      update((prev) => stepBench(prev, dt));
+      update((prev) => advanceBench(prev, dt));
     }, TICK_MS);
     return () => window.clearInterval(id);
-  }, [settled, update]);
+  }, [settled, update, speed]);
 
   // Memoised so Unity only gets a SetState when something it draws changed.
   const snapshot = useMemo(
@@ -157,6 +159,8 @@ export default function CalorimetrySim() {
           resetDisabled={bench === setup.initial}
           settings={setup.settings}
           onApplySettings={applySettings}
+          speed={speed}
+          onSpeedChange={setSpeed}
         />
       </div>
     </div>

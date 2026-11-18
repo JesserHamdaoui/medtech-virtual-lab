@@ -8,7 +8,9 @@ import { GraphSample } from "./graphHistory";
 import InstrumentDock from "./InstrumentDock";
 import MaterialInventory from "./MaterialInventory";
 import { LabSettings } from "./labSettings";
+import { SimSpeed } from "./simSpeed";
 import SettingsMenu from "./SettingsMenu";
+import SpeedControl from "./SpeedControl";
 import StationHeader from "./StationHeader";
 import { buildStationStatus } from "./stationStatus";
 import {
@@ -40,6 +42,8 @@ interface StationCanvasProps {
   resetDisabled: boolean;
   settings: LabSettings;
   onApplySettings: (settings: LabSettings) => void;
+  speed: SimSpeed;
+  onSpeedChange: (speed: SimSpeed) => void;
 }
 
 /**
@@ -68,6 +72,8 @@ export default function StationCanvas({
   resetDisabled,
   settings,
   onApplySettings,
+  speed,
+  onSpeedChange,
 }: StationCanvasProps) {
   const [isDragOver, setIsDragOver] = useState(false);
   const probeRef = useRef<DropProbe | null>(null);
@@ -119,6 +125,7 @@ export default function StationCanvas({
         onReset={onReset}
         resetDisabled={resetDisabled}
       >
+        <SpeedControl speed={speed} onChange={onSpeedChange} />
         <SettingsMenu settings={settings} onApply={onApplySettings} />
       </StationHeader>
 

@@ -28,7 +28,7 @@ export interface GraphSeries {
 }
 
 /** The most samples kept, so a long session can't grow without bound. */
-export const MAX_SAMPLES = 2400;
+export const MAX_SAMPLES = 7200;
 
 const WATER_COLOR = "var(--sim-accent-500)";
 const METAL_COLOR = "#e8590c";

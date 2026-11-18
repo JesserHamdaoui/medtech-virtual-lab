@@ -4,7 +4,7 @@ import { CalorimetryBench } from "./types";
 
 /** Samples are recorded no closer together than this, s. */
 const RECORD_EVERY = 0.25;
-/** Matches the bench clock: a long idle gap counts as no more than this, s. */
+/** Matches the bench clock: a long idle gap counts as no more than this many real seconds. */
 const MAX_STEP_SECONDS = 1;
 
 /**
@@ -12,7 +12,7 @@ const MAX_STEP_SECONDS = 1;
  * recording runs for the whole bench, so switching stations never loses the
  * curve, and resetting the bench (back to `initial`) starts a new one.
  */
-export function useGraphHistory(bench: CalorimetryBench, initial: CalorimetryBench): GraphSample[] {
+export function useGraphHistory(bench: CalorimetryBench, initial: CalorimetryBench, speed: number): GraphSample[] {
   const [samples, setSamples] = useState<GraphSample[]>([]);
   const clock = useRef({ t: 0, last: 0 });
 
@@ -27,10 +27,10 @@ export function useGraphHistory(bench: CalorimetryBench, initial: CalorimetryBen
 
     const gap = (now - clock.current.last) / 1000;
     if (gap < RECORD_EVERY) return;
-    clock.current = { t: clock.current.t + Math.min(MAX_STEP_SECONDS, gap), last: now };
+    clock.current = { t: clock.current.t + Math.min(MAX_STEP_SECONDS, gap) * speed, last: now };
     const sample = sampleBench(bench, clock.current.t);
     setSamples((prev) => appendSample(prev, sample));
-  }, [bench, initial]);
+  }, [bench, initial, speed]);
 
   return samples;
 }
