@@ -18,6 +18,7 @@ import {
   uncover,
 } from "./types";
 import { toUnitySnapshot } from "./unityState";
+import { useGraphHistory } from "./useGraphHistory";
 
 /** How often the bench is advanced, ms. */
 const TICK_MS = 100;
@@ -30,6 +31,7 @@ export default function CalorimetrySim() {
   const materials = getMaterialsFor(activeSection);
   const [activeStation, setActiveStation] = useState(stations[0].id);
   const [bench, setBench] = useState<CalorimetryBench>(INITIAL_BENCH);
+  const samples = useGraphHistory(bench);
 
   const selectSection = (section: CalorimetrySection) => {
     setActiveSection(section);
@@ -114,6 +116,7 @@ export default function CalorimetrySim() {
           stepCount={stations.length}
           materials={materials}
           bench={bench}
+          samples={samples}
           snapshot={snapshot}
           onPlaceSample={placeSample}
           onRemoveSample={removeSample}

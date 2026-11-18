@@ -3,6 +3,8 @@
 import { DragEvent, useRef, useState } from "react";
 import CalorimetryUnity, { DropProbe } from "./CalorimetryUnity";
 import DockActions from "./DockActions";
+import GraphPanel from "./GraphPanel";
+import { GraphSample } from "./graphHistory";
 import InstrumentDock from "./InstrumentDock";
 import MaterialInventory from "./MaterialInventory";
 import StationHeader from "./StationHeader";
@@ -25,6 +27,8 @@ interface StationCanvasProps {
   stepCount: number;
   materials: MaterialInfo[];
   bench: CalorimetryBench;
+  /** The recorded temperatures for the live graph. */
+  samples: GraphSample[];
   snapshot: UnityCalorimetrySnapshot;
   onPlaceSample: (materialId: string) => void;
   onRemoveSample: () => void;
@@ -37,7 +41,7 @@ interface StationCanvasProps {
 /**
  * Bench canvas for the active station. Unity draws the station's apparatus
  * between a header on top and the instrument dock along the bottom, with the
- * inventory down its left side. A material dragged in from the inventory is set on the
+ * live graph in a column to its left and the inventory down its left edge. A material dragged in from the inventory is set on the
  * station — on the scale pan, into the beaker or cup, onto the plate or
  * under the can — and Unity draws it there. It only lands when let go over
  * the apparatus itself, which Unity outlines while the sample is held over it. On the balance, the scale's LCD
@@ -50,6 +54,7 @@ export default function StationCanvas({
   stepCount,
   materials,
   bench,
+  samples,
   snapshot,
   onPlaceSample,
   onRemoveSample,
@@ -109,9 +114,12 @@ export default function StationCanvas({
         resetDisabled={resetDisabled}
       />
 
-      <div className="relative flex-1 min-h-0">
-        <CalorimetryUnity snapshot={snapshot} probeRef={probeRef} onHeaterToggle={onHeaterToggle} />
-        <MaterialInventory materials={materials} inUseIds={inUse} />
+      <div className="flex flex-1 min-h-0">
+        <GraphPanel stationId={station.id} samples={samples} />
+        <div className="relative flex-1 min-w-0">
+          <CalorimetryUnity snapshot={snapshot} probeRef={probeRef} onHeaterToggle={onHeaterToggle} />
+          <MaterialInventory materials={materials} inUseIds={inUse} />
+        </div>
       </div>
 
       <InstrumentDock status={status}>
