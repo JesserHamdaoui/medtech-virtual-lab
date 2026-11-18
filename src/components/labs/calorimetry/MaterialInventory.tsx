@@ -9,7 +9,8 @@ interface MaterialInventoryProps {
 }
 
 /**
- * Bench inventory, pinned to the bottom-left corner of the canvas, listing
+ * Bench inventory, a rail down the left side of the canvas between the header
+ * and the dock, listing
  * the materials available for the active section as draggable cases — each
  * one a picture of the sample rendered from its Unity model, dragged onto a
  * station to use it. Drop handling lives on the station that wants it.
@@ -19,7 +20,7 @@ interface MaterialInventoryProps {
  */
 export default function MaterialInventory({ materials, inUseIds = [] }: MaterialInventoryProps) {
   return (
-    <div className="absolute bottom-3 left-3 flex gap-2">
+    <div className="absolute left-3 top-20 bottom-24 flex flex-col justify-center gap-2 pointer-events-none">
       {materials.map((material) => {
         const inUse = inUseIds.includes(material.id);
 
@@ -47,7 +48,7 @@ export default function MaterialInventory({ materials, inUseIds = [] }: Material
               window.setTimeout(() => ghost.remove(), 0);
             }}
             title={inUse ? `${material.label} (on a station)` : material.label}
-            className={`w-24 flex flex-col items-center gap-1 border-2 shadow-md px-2 py-2 select-none transition-colors duration-100 ${
+            className={`pointer-events-auto w-24 flex flex-col items-center gap-1 border-2 shadow-md px-2 py-2 select-none transition-colors duration-100 ${
               inUse
                 ? "border-dashed border-[var(--sim-neutral-300)] bg-[var(--sim-neutral-50)] cursor-default"
                 : "border-[var(--sim-border)] bg-[var(--sim-neutral-0)] cursor-grab active:cursor-grabbing hover:border-[var(--sim-accent-700)]"
