@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { GraphSample, appendSample, sampleBench } from "./graphHistory";
-import { CalorimetryBench, INITIAL_BENCH } from "./types";
+import { CalorimetryBench } from "./types";
 
 /** Samples are recorded no closer together than this, s. */
 const RECORD_EVERY = 0.25;
@@ -10,16 +10,16 @@ const MAX_STEP_SECONDS = 1;
 /**
  * Records the bench's temperatures as it changes, for the live graph. One
  * recording runs for the whole bench, so switching stations never loses the
- * curve, and resetting the bench starts a new one.
+ * curve, and resetting the bench (back to `initial`) starts a new one.
  */
-export function useGraphHistory(bench: CalorimetryBench): GraphSample[] {
+export function useGraphHistory(bench: CalorimetryBench, initial: CalorimetryBench): GraphSample[] {
   const [samples, setSamples] = useState<GraphSample[]>([]);
   const clock = useRef({ t: 0, last: 0 });
 
   useEffect(() => {
     const now = performance.now();
 
-    if (bench === INITIAL_BENCH) {
+    if (bench === initial) {
       clock.current = { t: 0, last: now };
       setSamples([sampleBench(bench, 0)]);
       return;
@@ -30,7 +30,7 @@ export function useGraphHistory(bench: CalorimetryBench): GraphSample[] {
     clock.current = { t: clock.current.t + Math.min(MAX_STEP_SECONDS, gap), last: now };
     const sample = sampleBench(bench, clock.current.t);
     setSamples((prev) => appendSample(prev, sample));
-  }, [bench]);
+  }, [bench, initial]);
 
   return samples;
 }

@@ -10,6 +10,7 @@ import {
   CalorimetrySection,
   CUP_STATION,
   INITIAL_BENCH,
+  initialBench,
   benchSettled,
   getMaterialsFor,
   getStationsFor,
@@ -18,6 +19,7 @@ import {
   syncCup,
   uncover,
 } from "./types";
+import { DEFAULT_LAB_SETTINGS, LabSettings } from "./labSettings";
 import { recordProgress, sectionProgress } from "./progress";
 import { toUnitySnapshot } from "./unityState";
 import { useGraphHistory } from "./useGraphHistory";
@@ -32,8 +34,11 @@ export default function CalorimetrySim() {
   const stations = getStationsFor(activeSection);
   const materials = getMaterialsFor(activeSection);
   const [activeStation, setActiveStation] = useState(stations[0].id);
-  const [bench, setBench] = useState<CalorimetryBench>(INITIAL_BENCH);
-  const samples = useGraphHistory(bench);
+  // The set-up the student chose, and the empty bench that goes with it. A
+  // reset puts the bench back to exactly that object.
+  const [setup, setSetup] = useState({ settings: DEFAULT_LAB_SETTINGS, initial: INITIAL_BENCH });
+  const [bench, setBench] = useState<CalorimetryBench>(setup.initial);
+  const samples = useGraphHistory(bench, setup.initial);
 
   // Every change to the bench goes through here, so progress is recorded as it happens.
   const update = useCallback((change: (prev: CalorimetryBench) => CalorimetryBench) => {
@@ -90,7 +95,14 @@ export default function CalorimetrySim() {
   const igniteSample = () => update(ignite);
 
   // Everything back in the inventory, cold water, plate off.
-  const resetBench = () => setBench(INITIAL_BENCH);
+  const resetBench = () => setBench(setup.initial);
+
+  // New masses or water amounts mean a different experiment, so the bench starts over.
+  const applySettings = (settings: LabSettings) => {
+    const initial = initialBench(settings);
+    setSetup({ settings, initial });
+    setBench(initial);
+  };
 
   // One clock runs the whole bench in real time, whichever station is open:
   // the bath heats and cools, a lit sample burns down and warms the flask, the
@@ -142,7 +154,9 @@ export default function CalorimetrySim() {
           onHeaterToggle={toggleHeater}
           onIgnite={igniteSample}
           onReset={resetBench}
-          resetDisabled={bench === INITIAL_BENCH}
+          resetDisabled={bench === setup.initial}
+          settings={setup.settings}
+          onApplySettings={applySettings}
         />
       </div>
     </div>

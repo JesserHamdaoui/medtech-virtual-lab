@@ -1,4 +1,5 @@
 import { faRotateLeft } from "@fortawesome/free-solid-svg-icons";
+import { ReactNode } from "react";
 import DockButton from "./DockButton";
 
 interface StationHeaderProps {
@@ -10,6 +11,8 @@ interface StationHeaderProps {
   stepCount: number;
   onReset: () => void;
   resetDisabled: boolean;
+  /** Extra controls, shown before Reset. */
+  children?: ReactNode;
 }
 
 /** The slim bar above the 3D bench: where the student is and what to do next. */
@@ -20,6 +23,7 @@ export default function StationHeader({
   stepCount,
   onReset,
   resetDisabled,
+  children,
 }: StationHeaderProps) {
   return (
     <div className="flex items-center gap-4 border-b-2 border-[var(--sim-border)] bg-[var(--sim-neutral-0)] px-4 py-2 text-left">
@@ -32,6 +36,7 @@ export default function StationHeader({
       <span className="text-[10px] font-bold tracking-widest uppercase text-[var(--sim-label)] whitespace-nowrap">
         Step {stepIndex + 1} of {stepCount}
       </span>
+      {children}
       <DockButton icon={faRotateLeft} onClick={onReset} disabled={resetDisabled}>
         Reset bench
       </DockButton>

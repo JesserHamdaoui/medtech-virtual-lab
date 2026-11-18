@@ -3,7 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReactNode } from "react";
 
 interface DockButtonProps {
-  onClick: () => void;
+  /** Omit for a button that only runs onClick; "submit" sends the form it sits in. */
+  type?: "button" | "submit";
+  onClick?: () => void;
   disabled?: boolean;
   /** Primary actions are filled, secondary ones outlined. */
   variant?: "primary" | "secondary";
@@ -13,7 +15,7 @@ interface DockButtonProps {
 }
 
 /** A button in the instrument dock. */
-export default function DockButton({ onClick, disabled = false, variant = "secondary", icon, children }: DockButtonProps) {
+export default function DockButton({ type = "button", onClick, disabled = false, variant = "secondary", icon, children }: DockButtonProps) {
   const look =
     variant === "primary"
       ? "bg-[var(--sim-accent-500)] text-white border-[var(--sim-border)] enabled:hover:bg-[var(--sim-accent-600)]"
@@ -21,7 +23,7 @@ export default function DockButton({ onClick, disabled = false, variant = "secon
 
   return (
     <button
-      type="button"
+      type={type}
       onClick={onClick}
       disabled={disabled}
       className={`flex items-center justify-center gap-1.5 border-2 px-3 py-2 text-xs font-bold tracking-widest uppercase whitespace-nowrap cursor-pointer disabled:cursor-not-allowed disabled:bg-[var(--sim-neutral-50)] disabled:text-[var(--sim-neutral-500)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sim-accent-700)] ${look}`}

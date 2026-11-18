@@ -7,6 +7,8 @@ import GraphPanel from "./GraphPanel";
 import { GraphSample } from "./graphHistory";
 import InstrumentDock from "./InstrumentDock";
 import MaterialInventory from "./MaterialInventory";
+import { LabSettings } from "./labSettings";
+import SettingsMenu from "./SettingsMenu";
 import StationHeader from "./StationHeader";
 import { buildStationStatus } from "./stationStatus";
 import {
@@ -36,6 +38,8 @@ interface StationCanvasProps {
   onIgnite: () => void;
   onReset: () => void;
   resetDisabled: boolean;
+  settings: LabSettings;
+  onApplySettings: (settings: LabSettings) => void;
 }
 
 /**
@@ -62,6 +66,8 @@ export default function StationCanvas({
   onIgnite,
   onReset,
   resetDisabled,
+  settings,
+  onApplySettings,
 }: StationCanvasProps) {
   const [isDragOver, setIsDragOver] = useState(false);
   const probeRef = useRef<DropProbe | null>(null);
@@ -112,7 +118,9 @@ export default function StationCanvas({
         stepCount={stepCount}
         onReset={onReset}
         resetDisabled={resetDisabled}
-      />
+      >
+        <SettingsMenu settings={settings} onApply={onApplySettings} />
+      </StationHeader>
 
       <div className="flex flex-1 min-h-0">
         <div className="relative flex-1 min-w-0">
