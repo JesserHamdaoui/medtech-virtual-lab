@@ -201,6 +201,12 @@ export interface CalorimetryBench {
    * heat with the water. Moving it between stations keeps its temperature.
    */
   metalTemps: Record<string, number>;
+  /**
+   * How far each sample has got through its milestones, 0..1, by material id
+   * then milestone id (see progress.ts). Only ever goes up until the bench is
+   * reset, so a step done once stays done.
+   */
+  progress: Record<string, Record<string, number>>;
 }
 
 /** Lab room temperature, °C: where the bath starts and cools back to. */
@@ -280,6 +286,7 @@ export const INITIAL_BENCH: CalorimetryBench = {
   cupTarget: CUP_COLD_TEMP,
   cupMetalTemp: ROOM_TEMP,
   metalTemps: {},
+  progress: {},
 };
 
 /** A metal sample's temperature now, °C. */

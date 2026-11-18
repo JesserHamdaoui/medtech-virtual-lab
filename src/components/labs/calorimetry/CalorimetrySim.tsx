@@ -18,6 +18,7 @@ import {
   syncCup,
   uncover,
 } from "./types";
+import { recordProgress, sectionProgress } from "./progress";
 import { toUnitySnapshot } from "./unityState";
 import { useGraphHistory } from "./useGraphHistory";
 
@@ -33,6 +34,15 @@ export default function CalorimetrySim() {
   const [activeStation, setActiveStation] = useState(stations[0].id);
   const [bench, setBench] = useState<CalorimetryBench>(INITIAL_BENCH);
   const samples = useGraphHistory(bench);
+
+  // Every change to the bench goes through here, so progress is recorded as it happens.
+  const update = useCallback((change: (prev: CalorimetryBench) => CalorimetryBench) => {
+    setBench((prev) => recordProgress(change(prev)));
+  }, []);
+  const progress = {
+    metal: sectionProgress(bench, "metal"),
+    biomass: sectionProgress(bench, "biomass"),
+  };
   const occupiedSections = CALORIMETRY_SECTIONS.filter(
     (section) => Object.keys(bench.placements[section.id]).length > 0,
   ).map((section) => section.id);
@@ -48,7 +58,7 @@ export default function CalorimetrySim() {
   // anywhere else until it is removed back to the inventory. Dropping onto an
   // occupied station sends the sample that was there back to the inventory.
   const placeSample = (materialId: string) => {
-    setBench((prev) => {
+    update((prev) => {
       const placed = prev.placements[activeSection];
       if (Object.values(placed).includes(materialId)) return prev;
       const next = {
@@ -60,7 +70,7 @@ export default function CalorimetrySim() {
   };
 
   const removeSample = () => {
-    setBench((prev) => {
+    update((prev) => {
       // A burning sample stays on the dish until it is out.
       if (prev.burning !== null && prev.placements[activeSection][station.id] === prev.burning) return prev;
       const placed = { ...prev.placements[activeSection] };
@@ -74,10 +84,10 @@ export default function CalorimetrySim() {
 
   // Stable, so the Unity event listener isn't re-attached every render.
   const toggleHeater = useCallback(() => {
-    setBench((prev) => ({ ...prev, heaterOn: !prev.heaterOn }));
-  }, []);
+    update((prev) => ({ ...prev, heaterOn: !prev.heaterOn }));
+  }, [update]);
 
-  const igniteSample = () => setBench(ignite);
+  const igniteSample = () => update(ignite);
 
   // Everything back in the inventory, cold water, plate off.
   const resetBench = () => setBench(INITIAL_BENCH);
@@ -96,10 +106,10 @@ export default function CalorimetrySim() {
       const now = performance.now();
       const dt = Math.min(MAX_STEP_SECONDS, (now - last) / 1000);
       last = now;
-      setBench((prev) => stepBench(prev, dt));
+      update((prev) => stepBench(prev, dt));
     }, TICK_MS);
     return () => window.clearInterval(id);
-  }, [settled]);
+  }, [settled, update]);
 
   // Memoised so Unity only gets a SetState when something it draws changed.
   const snapshot = useMemo(
@@ -109,7 +119,7 @@ export default function CalorimetrySim() {
 
   return (
     <div className="w-full border-2 border-[var(--sim-border)] bg-[var(--sim-neutral-50)]">
-      <SectionTabs activeSection={activeSection} occupied={occupiedSections} onSelect={selectSection} />
+      <SectionTabs activeSection={activeSection} occupied={occupiedSections} progress={progress} onSelect={selectSection} />
       <StationTabs
         stations={stations}
         activeStation={activeStation}
