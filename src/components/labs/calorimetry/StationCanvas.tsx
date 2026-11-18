@@ -96,10 +96,8 @@ export default function StationCanvas({
           onPlaceSample(materialId);
         }
       }}
-      className={`relative flex-1 min-h-[520px] border-2 bg-[var(--sim-panel-bg)] flex flex-col transition-colors duration-100 ${
-        isDragOver
-          ? "border-[var(--sim-accent-700)] outline outline-2 outline-dashed outline-[var(--sim-accent-900)] outline-offset-[-4px]"
-          : "border-[var(--sim-border)]"
+      className={`relative flex-1 min-h-[520px] bg-[var(--sim-panel-bg)] flex flex-col transition-colors duration-100 ${
+        isDragOver ? "outline outline-2 outline-dashed outline-[var(--sim-accent-900)] outline-offset-[-4px]" : ""
       }`}
     >
       <StationHeader
