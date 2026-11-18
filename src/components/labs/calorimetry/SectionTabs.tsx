@@ -17,7 +17,7 @@ export default function SectionTabs({ activeSection, onSelect }: SectionTabsProp
             key={section.id}
             type="button"
             onClick={() => onSelect(section.id)}
-            className={`flex flex-col items-start gap-1 px-6 py-2.5 border-r-2 border-[var(--sim-border)] cursor-pointer transition-colors duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sim-accent-700)] focus-visible:ring-offset-[-2px] ${
+            className={`flex-1 flex flex-col items-center gap-1 px-6 py-2.5 border-r-2 last:border-r-0 border-[var(--sim-border)] cursor-pointer transition-colors duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sim-accent-700)] focus-visible:ring-offset-[-2px] ${
               isActive
                 ? "bg-[var(--sim-accent-500)] text-white"
                 : "bg-[var(--sim-neutral-50)] text-[var(--sim-neutral-600)] hover:bg-[var(--sim-neutral-100)]"
