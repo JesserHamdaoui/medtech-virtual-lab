@@ -7,7 +7,7 @@ interface GraphPanelProps {
 }
 
 /**
- * The column left of the 3D bench: the live graph of the open station, with a
+ * The column right of the 3D bench: the live graph of the open station, with a
  * legend that carries each line's current value. A station with nothing to
  * plot keeps the column, so the 3D view doesn't change width between tabs.
  */
@@ -16,7 +16,7 @@ export default function GraphPanel({ stationId, samples }: GraphPanelProps) {
   const latest = samples.length ? samples[samples.length - 1] : null;
 
   return (
-    <aside className="w-72 shrink-0 flex flex-col gap-3 border-r-2 border-[var(--sim-border)] bg-[var(--sim-neutral-0)] p-3">
+    <aside className="w-72 shrink-0 flex flex-col gap-3 border-l-2 border-[var(--sim-border)] bg-[var(--sim-neutral-0)] p-3">
       <span className="text-[10px] font-bold tracking-widest uppercase text-[var(--sim-label)]">
         Temperature vs time
       </span>

@@ -41,7 +41,7 @@ interface StationCanvasProps {
 /**
  * Bench canvas for the active station. Unity draws the station's apparatus
  * between a header on top and the instrument dock along the bottom, with the
- * live graph in a column to its left and the inventory down its left edge. A material dragged in from the inventory is set on the
+ * live graph in a column to its right and the inventory down its left edge. A material dragged in from the inventory is set on the
  * station — on the scale pan, into the beaker or cup, onto the plate or
  * under the can — and Unity draws it there. It only lands when let go over
  * the apparatus itself, which Unity outlines while the sample is held over it. On the balance, the scale's LCD
@@ -115,11 +115,11 @@ export default function StationCanvas({
       />
 
       <div className="flex flex-1 min-h-0">
-        <GraphPanel stationId={station.id} samples={samples} />
         <div className="relative flex-1 min-w-0">
           <CalorimetryUnity snapshot={snapshot} probeRef={probeRef} onHeaterToggle={onHeaterToggle} />
           <MaterialInventory materials={materials} inUseIds={inUse} />
         </div>
+        <GraphPanel stationId={station.id} samples={samples} />
       </div>
 
       <InstrumentDock status={status}>
