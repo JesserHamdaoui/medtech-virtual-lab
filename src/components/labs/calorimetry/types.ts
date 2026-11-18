@@ -1,3 +1,5 @@
+import { DEFAULT_LAB_SETTINGS, LabSettings, WATER_GRAMS_PER_ML } from "./labSettings";
+
 /** Outer tab: which calorimetry setup is being run. */
 export type CalorimetrySection = "metal" | "biomass";
 
@@ -207,6 +209,8 @@ export interface CalorimetryBench {
    * reset, so a step done once stays done.
    */
   progress: Record<string, Record<string, number>>;
+  /** The set-up the student chose: sample masses and water amounts. */
+  settings: LabSettings;
 }
 
 /** Lab room temperature, °C: where the bath starts and cools back to. */
@@ -223,8 +227,6 @@ const SIMMER_FROM = 70;
 const CATCH_SECONDS = 3;
 /** And dies down over this long at the end, s. */
 const DIE_DOWN_SECONDS = 8;
-/** Water in the flask on the tin can, g. */
-export const FLASK_WATER_GRAMS = 100;
 /** Specific heat of water, J/(g·°C). */
 const WATER_SPECIFIC_HEAT = 4.184;
 /**
@@ -236,10 +238,6 @@ const CAN_EFFICIENCY = 0.25;
 const FLASK_COOLING_RATE = 0.002;
 /** The metal is dropped into the cold water of this station. */
 export const CUP_STATION = "coffee-cup-calorimeter";
-/** The cup's water starts cold, °C. */
-export const CUP_COLD_TEMP = 10;
-/** Water in the coffee cup, g. */
-export const CUP_WATER_GRAMS = 20;
 /** How fast the cup water closes on its final temperature, per second. */
 const CUP_SETTLE_RATE = 0.3;
 /** Below this gap the cup water counts as settled, °C. */
@@ -268,26 +266,53 @@ const BURN_STATION = "tin-can-calorimeter";
 /** What a burnt sample looks like: ash and char. */
 const ASH_LOOK: MaterialLook = { color: "#2e2a27", metallic: 0, smoothness: 0.1 };
 
-export const INITIAL_BENCH: CalorimetryBench = {
-  placements: { metal: {}, biomass: {} },
-  waterColor: "#9eccf28c",
-  beakerFill: 0.6,
-  flaskFill: 0.55,
-  heaterOn: false,
-  bathTemp: ROOM_TEMP,
-  burning: null,
-  burnTime: 0,
-  burnt: [],
-  covered: false,
-  flaskTemp: ROOM_TEMP,
-  flaskMax: ROOM_TEMP,
-  cupFill: 0.65,
-  cupTemp: CUP_COLD_TEMP,
-  cupTarget: CUP_COLD_TEMP,
-  cupMetalTemp: ROOM_TEMP,
-  metalTemps: {},
-  progress: {},
-};
+/** A sample's mass, g: the student's setting, or the one in its material table. */
+export function massOf(bench: CalorimetryBench, material: MaterialInfo): number {
+  return bench.settings.masses[material.id] ?? material.massGrams;
+}
+
+/** Water in the coffee cup, g. */
+export function cupWaterGrams(bench: CalorimetryBench): number {
+  return bench.settings.cupWaterMl * WATER_GRAMS_PER_ML;
+}
+
+/** Water in the flask on the tin can, g. */
+export function flaskWaterGrams(bench: CalorimetryBench): number {
+  return bench.settings.flaskWaterMl * WATER_GRAMS_PER_ML;
+}
+
+/** How full a vessel looks: its usual fill scaled by how much water it holds against its usual amount. */
+function fillFor(usualFill: number, ml: number, usualMl: number): number {
+  return Math.min(0.95, Math.max(0.15, usualFill * (ml / usualMl)));
+}
+
+/** A bench with nothing on it, set up the way the settings say. */
+export function initialBench(settings: LabSettings = DEFAULT_LAB_SETTINGS): CalorimetryBench {
+  return {
+    placements: { metal: {}, biomass: {} },
+    waterColor: "#9eccf28c",
+    beakerFill: 0.6,
+    flaskFill: fillFor(0.55, settings.flaskWaterMl, DEFAULT_LAB_SETTINGS.flaskWaterMl),
+    heaterOn: false,
+    bathTemp: ROOM_TEMP,
+    burning: null,
+    burnTime: 0,
+    burnt: [],
+    covered: false,
+    flaskTemp: ROOM_TEMP,
+    flaskMax: ROOM_TEMP,
+    cupFill: fillFor(0.65, settings.cupWaterMl, DEFAULT_LAB_SETTINGS.cupWaterMl),
+    cupTemp: settings.cupColdTemp,
+    cupTarget: settings.cupColdTemp,
+    cupMetalTemp: ROOM_TEMP,
+    metalTemps: {},
+    progress: {},
+    settings,
+  };
+}
+
+/** The bench as it starts with the default set-up. */
+export const INITIAL_BENCH: CalorimetryBench = initialBench();
 
 /** A metal sample's temperature now, °C. */
 export function metalTempOf(bench: CalorimetryBench, materialId: string): number {
@@ -310,8 +335,9 @@ export function samplesInUse(bench: CalorimetryBench, section: CalorimetrySectio
 
 /** A sample's mass now: what is left of it once burnt. */
 export function currentMass(bench: CalorimetryBench, material: MaterialInfo): number {
-  if (!bench.burnt.includes(material.id)) return material.massGrams;
-  return material.massGrams * (material.residueFraction ?? 0);
+  const mass = massOf(bench, material);
+  if (!bench.burnt.includes(material.id)) return mass;
+  return mass * (material.residueFraction ?? 0);
 }
 
 /** How a sample looks now: ash once it has burnt. */
@@ -379,7 +405,7 @@ function flameTotal(material: MaterialInfo): number {
 /** Heat the burning sample gives the flask water per second right now, J/s. */
 function heatIntoFlask(bench: CalorimetryBench, material: MaterialInfo): number {
   if (!bench.covered) return 0;
-  const joules = material.massGrams * (material.heatOfCombustion ?? 0) * 1000 * CAN_EFFICIENCY;
+  const joules = massOf(bench, material) * (material.heatOfCombustion ?? 0) * 1000 * CAN_EFFICIENCY;
   return (joules * flameAt(material, bench.burnTime)) / flameTotal(material);
 }
 
@@ -390,7 +416,7 @@ function heatIntoFlask(bench: CalorimetryBench, material: MaterialInfo): number 
  */
 export function stepFlask(bench: CalorimetryBench, dt: number): CalorimetryBench {
   const material = findMaterial(bench.burning);
-  const heating = material ? heatIntoFlask(bench, material) / (FLASK_WATER_GRAMS * WATER_SPECIFIC_HEAT) : 0;
+  const heating = material ? heatIntoFlask(bench, material) / (flaskWaterGrams(bench) * WATER_SPECIFIC_HEAT) : 0;
   const rate = heating - FLASK_COOLING_RATE * (bench.flaskTemp - ROOM_TEMP);
   const flaskTemp = Math.min(BOILING_POINT, Math.max(ROOM_TEMP, bench.flaskTemp + rate * dt));
   const next = { ...bench, flaskTemp, flaskMax: Math.max(bench.flaskMax, flaskTemp) };
@@ -415,12 +441,12 @@ export function flaskSettled(bench: CalorimetryBench): boolean {
 export function syncCup(bench: CalorimetryBench): CalorimetryBench {
   const metal = sampleAt(bench, "metal", CUP_STATION);
   if (!metal) {
-    return { ...bench, cupTemp: CUP_COLD_TEMP, cupTarget: CUP_COLD_TEMP };
+    return { ...bench, cupTemp: bench.settings.cupColdTemp, cupTarget: bench.settings.cupColdTemp };
   }
 
   const metalTemp = metalTempOf(bench, metal.id);
-  const waterHeat = CUP_WATER_GRAMS * WATER_SPECIFIC_HEAT;
-  const metalHeat = metal.massGrams * (metal.specificHeat ?? 0);
+  const waterHeat = cupWaterGrams(bench) * WATER_SPECIFIC_HEAT;
+  const metalHeat = massOf(bench, metal) * (metal.specificHeat ?? 0);
   const cupTarget = (waterHeat * bench.cupTemp + metalHeat * metalTemp) / (waterHeat + metalHeat);
   return { ...bench, cupTarget, cupMetalTemp: metalTemp };
 }

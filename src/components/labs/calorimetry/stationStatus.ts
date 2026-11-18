@@ -1,11 +1,8 @@
 import {
   BOILING_POINT,
-  CUP_COLD_TEMP,
   CUP_STATION,
-  CUP_WATER_GRAMS,
   CalorimetryBench,
   CalorimetrySection,
-  FLASK_WATER_GRAMS,
   ROOM_TEMP,
   burnRemaining,
   cupSettled,
@@ -86,12 +83,12 @@ function bathStatus(bench: CalorimetryBench): StationStatus {
 function cupStatus(bench: CalorimetryBench): StationStatus {
   const metal = sampleAt(bench, "metal", CUP_STATION);
   const stats: DockStat[] = [
-    { label: "Water", value: `${CUP_WATER_GRAMS} g` },
-    { label: "Water start", value: celsius(CUP_COLD_TEMP) },
+    { label: "Water", value: `${bench.settings.cupWaterMl} mL` },
+    { label: "Water start", value: celsius(bench.settings.cupColdTemp) },
   ];
   if (metal) {
     stats.push({ label: "Metal in at", value: celsius(bench.cupMetalTemp) });
-    stats.push({ label: "ΔT water", value: celsius(bench.cupTemp - CUP_COLD_TEMP) });
+    stats.push({ label: "ΔT water", value: celsius(bench.cupTemp - bench.settings.cupColdTemp) });
   }
 
   let status: StationStatus["status"];
@@ -119,7 +116,7 @@ function tinCanStatus(bench: CalorimetryBench): StationStatus {
 
   const stats: DockStat[] = [
     { label: "Max", value: celsius(bench.flaskMax) },
-    { label: "Water", value: `${FLASK_WATER_GRAMS} g` },
+    { label: "Water", value: `${bench.settings.flaskWaterMl} mL` },
   ];
   if (sample) stats.push({ label: "Sample", value: sample.label });
   if (burning) stats.push({ label: "Burn left", value: `${Math.ceil(burnRemaining(bench))} s` });

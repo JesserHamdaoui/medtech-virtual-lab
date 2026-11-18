@@ -1,7 +1,6 @@
 import {
   BATH_STATION,
   BOILING_POINT,
-  CUP_COLD_TEMP,
   CUP_STATION,
   CalorimetryBench,
   CalorimetrySection,
@@ -35,8 +34,8 @@ function metalMilestones(bench: CalorimetryBench, metal: MaterialInfo): Mileston
   const inCup = bench.placements.metal[CUP_STATION] === metal.id;
   const hot = inBath && bench.heaterOn && bench.bathTemp >= BOILING_POINT - BOILING_GAP && Math.abs(temp - bench.bathTemp) <= METAL_LEVEL_GAP;
 
-  const cupSpan = bench.cupTarget - CUP_COLD_TEMP;
-  const settling = inCup && cupSpan > 0 ? (bench.cupTemp - CUP_COLD_TEMP) / cupSpan : 0;
+  const cupSpan = bench.cupTarget - bench.settings.cupColdTemp;
+  const settling = inCup && cupSpan > 0 ? (bench.cupTemp - bench.settings.cupColdTemp) / cupSpan : 0;
 
   return {
     weighed: flag(bench.placements.metal.balance === metal.id),
