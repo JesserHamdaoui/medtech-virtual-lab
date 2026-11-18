@@ -1,3 +1,9 @@
+"use client";
+
+import { faExpand } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import GraphModal from "./GraphModal";
 import LiveGraph from "./LiveGraph";
 import { GraphSample, graphSeriesFor } from "./graphHistory";
 
@@ -12,6 +18,7 @@ interface GraphPanelProps {
  * plot keeps the column, so the 3D view doesn't change width between tabs.
  */
 export default function GraphPanel({ stationId, samples }: GraphPanelProps) {
+  const [open, setOpen] = useState(false);
   const series = graphSeriesFor(stationId);
   const latest = samples.length ? samples[samples.length - 1] : null;
 
@@ -24,7 +31,18 @@ export default function GraphPanel({ stationId, samples }: GraphPanelProps) {
         <p className="text-sm text-[var(--sim-neutral-500)]">Nothing to plot at this station. Temperatures are recorded at the other stations.</p>
       ) : (
         <>
-          <LiveGraph series={series} samples={samples} />
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label="Open the interactive graph"
+            className="group relative block w-full cursor-zoom-in border-2 border-transparent hover:border-[var(--sim-accent-700)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sim-accent-700)]"
+          >
+            <LiveGraph series={series} samples={samples} />
+            <span className="absolute right-1 top-1 flex items-center gap-1 bg-[var(--sim-neutral-0)] px-1.5 py-0.5 text-[10px] font-bold tracking-widest uppercase text-[var(--sim-label)] opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100">
+              <FontAwesomeIcon icon={faExpand} aria-hidden />
+              Enlarge
+            </span>
+          </button>
           <ul className="flex flex-col gap-1">
             {series.map((line) => {
               const value = latest ? latest[line.key] : null;
@@ -41,6 +59,7 @@ export default function GraphPanel({ stationId, samples }: GraphPanelProps) {
           </ul>
         </>
       )}
+      {open && <GraphModal stationId={stationId} samples={samples} onClose={() => setOpen(false)} />}
     </aside>
   );
 }
