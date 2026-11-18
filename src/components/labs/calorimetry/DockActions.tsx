@@ -1,3 +1,4 @@
+import { faBoxOpen, faFire, faPowerOff } from "@fortawesome/free-solid-svg-icons";
 import DockButton from "./DockButton";
 import { CalorimetryBench, MaterialInfo, canIgnite } from "./types";
 
@@ -25,16 +26,16 @@ export default function DockActions({
   return (
     <>
       {stationId === "hot-water-bath" && (
-        <DockButton variant="primary" onClick={onHeaterToggle}>
+        <DockButton variant="primary" icon={faPowerOff} onClick={onHeaterToggle}>
           {bench.heaterOn ? "Heater off" : "Heater on"}
         </DockButton>
       )}
       {stationId === "tin-can-calorimeter" && sample && (
-        <DockButton variant="primary" onClick={onIgnite} disabled={!canIgnite(bench)}>
+        <DockButton variant="primary" icon={faFire} onClick={onIgnite} disabled={!canIgnite(bench)}>
           {burning ? "Burning" : "Ignite"}
         </DockButton>
       )}
-      {sample && !burning && <DockButton onClick={onRemoveSample}>Remove sample</DockButton>}
+      {sample && !burning && <DockButton icon={faBoxOpen} onClick={onRemoveSample}>Remove sample</DockButton>}
     </>
   );
 }

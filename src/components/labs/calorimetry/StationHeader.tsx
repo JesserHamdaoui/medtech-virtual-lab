@@ -1,3 +1,4 @@
+import { faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import DockButton from "./DockButton";
 
 interface StationHeaderProps {
@@ -31,7 +32,7 @@ export default function StationHeader({
       <span className="text-[10px] font-bold tracking-widest uppercase text-[var(--sim-label)] whitespace-nowrap">
         Step {stepIndex + 1} of {stepCount}
       </span>
-      <DockButton onClick={onReset} disabled={resetDisabled}>
+      <DockButton icon={faRotateLeft} onClick={onReset} disabled={resetDisabled}>
         Reset bench
       </DockButton>
     </div>
