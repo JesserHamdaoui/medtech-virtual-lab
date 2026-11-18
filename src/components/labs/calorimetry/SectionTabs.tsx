@@ -1,13 +1,16 @@
 "use client";
 
+import TabDot from "./TabDot";
 import { CALORIMETRY_SECTIONS, CalorimetrySection } from "./types";
 
 interface SectionTabsProps {
   activeSection: CalorimetrySection;
+  /** The sections that have a sample on one of their stations. */
+  occupied: CalorimetrySection[];
   onSelect: (section: CalorimetrySection) => void;
 }
 
-export default function SectionTabs({ activeSection, onSelect }: SectionTabsProps) {
+export default function SectionTabs({ activeSection, occupied, onSelect }: SectionTabsProps) {
   return (
     <div className="flex border-b-2 border-[var(--sim-border)] bg-[var(--sim-neutral-50)]">
       {CALORIMETRY_SECTIONS.map((section) => {
@@ -23,8 +26,9 @@ export default function SectionTabs({ activeSection, onSelect }: SectionTabsProp
                 : "bg-[var(--sim-neutral-50)] text-[var(--sim-neutral-600)] hover:bg-[var(--sim-neutral-100)]"
             }`}
           >
-            <span className="text-sm font-bold tracking-wide uppercase">
+            <span className="flex items-center gap-2 text-sm font-bold tracking-wide uppercase">
               {section.label}
+              {occupied.includes(section.id) && <TabDot onActive={isActive} />}
             </span>
             <span
               className={`text-xs font-semibold ${

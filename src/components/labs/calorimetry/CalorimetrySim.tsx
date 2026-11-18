@@ -5,6 +5,7 @@ import SectionTabs from "./SectionTabs";
 import StationCanvas from "./StationCanvas";
 import StationTabs from "./StationTabs";
 import {
+  CALORIMETRY_SECTIONS,
   CalorimetryBench,
   CalorimetrySection,
   CUP_STATION,
@@ -32,6 +33,9 @@ export default function CalorimetrySim() {
   const [activeStation, setActiveStation] = useState(stations[0].id);
   const [bench, setBench] = useState<CalorimetryBench>(INITIAL_BENCH);
   const samples = useGraphHistory(bench);
+  const occupiedSections = CALORIMETRY_SECTIONS.filter(
+    (section) => Object.keys(bench.placements[section.id]).length > 0,
+  ).map((section) => section.id);
 
   const selectSection = (section: CalorimetrySection) => {
     setActiveSection(section);
@@ -105,8 +109,13 @@ export default function CalorimetrySim() {
 
   return (
     <div className="w-full border-2 border-[var(--sim-border)] bg-[var(--sim-neutral-50)]">
-      <SectionTabs activeSection={activeSection} onSelect={selectSection} />
-      <StationTabs stations={stations} activeStation={activeStation} onSelect={setActiveStation} />
+      <SectionTabs activeSection={activeSection} occupied={occupiedSections} onSelect={selectSection} />
+      <StationTabs
+        stations={stations}
+        activeStation={activeStation}
+        occupied={Object.keys(bench.placements[activeSection])}
+        onSelect={setActiveStation}
+      />
 
       <div className="flex">
         <StationCanvas
