@@ -5,12 +5,14 @@ interface NumberFieldProps {
   unit: string;
   value: string;
   onChange: (value: string) => void;
-  /** Shown under the field when the value isn't allowed. */
+  /** Shown under the field while it is fine, such as the allowed range. */
+  hint?: string;
+  /** Shown under the field, in red, when the value isn't allowed. */
   error?: string;
 }
 
 /** A labelled number input with its unit and an error line. */
-export default function NumberField({ label, unit, value, onChange, error }: NumberFieldProps) {
+export default function NumberField({ label, unit, value, onChange, hint, error }: NumberFieldProps) {
   const id = useId();
   return (
     <div className="flex flex-col gap-0.5">
@@ -26,13 +28,17 @@ export default function NumberField({ label, unit, value, onChange, error }: Num
           value={value}
           onChange={(e) => onChange(e.target.value)}
           aria-invalid={!!error}
-          className={`w-24 border-2 bg-[var(--sim-neutral-0)] px-2 py-1 font-mono text-sm tabular-nums text-[var(--sim-neutral-900)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sim-accent-700)] ${
+          className={`w-full max-w-28 border-2 bg-[var(--sim-neutral-0)] px-2 py-1 font-mono text-sm tabular-nums text-[var(--sim-neutral-900)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sim-accent-700)] ${
             error ? "border-red-600" : "border-[var(--sim-border)]"
           }`}
         />
         <span className="text-xs font-semibold text-[var(--sim-neutral-600)]">{unit}</span>
       </div>
-      {error && <span className="text-[11px] text-red-700">{error}</span>}
+      {error ? (
+        <span className="text-[11px] text-red-700">{error}</span>
+      ) : (
+        hint && <span className="text-[11px] text-[var(--sim-neutral-500)]">{hint}</span>
+      )}
     </div>
   );
 }
