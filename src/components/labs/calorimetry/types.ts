@@ -1,3 +1,4 @@
+import { H_AIR, H_BATH, H_CUP, HEATER_NET_WATTS, filmRate, meetingRate } from "./heatTransfer";
 import { DEFAULT_LAB_SETTINGS, LabSettings, WATER_GRAMS_PER_ML } from "./labSettings";
 
 /** Outer tab: which calorimetry setup is being run. */
@@ -88,6 +89,8 @@ export interface MaterialInfo {
   look: MaterialLook;
   /** What the balance reads with this sample on the pan, in grams. */
   massGrams: number;
+  /** Metals only: density, g/cm³, which sets how big a puck of a given mass is. */
+  density?: number;
   /** Metals only: specific heat capacity, J/(g·°C). */
   specificHeat?: number;
   /** Biomass only: approximate heat of combustion, kJ/g. */
@@ -107,6 +110,7 @@ export const METAL_MATERIALS: MaterialInfo[] = [
     icon: "/images/calorimetry/zinc.png",
     look: { color: "#8f9ba6", metallic: 0.6, smoothness: 0.55 },
     massGrams: 5,
+    density: 7.144,
     specificHeat: 0.388,
   },
   {
@@ -115,6 +119,7 @@ export const METAL_MATERIALS: MaterialInfo[] = [
     icon: "/images/calorimetry/aluminum.png",
     look: { color: "#d6dadf", metallic: 0.5, smoothness: 0.6 },
     massGrams: 5,
+    density: 2.707,
     specificHeat: 0.897,
   },
   {
@@ -123,6 +128,7 @@ export const METAL_MATERIALS: MaterialInfo[] = [
     icon: "/images/calorimetry/tin.png",
     look: { color: "#b8b2a3", metallic: 0.55, smoothness: 0.45 },
     massGrams: 5,
+    density: 7.304,
     specificHeat: 0.227,
   },
 ];
@@ -217,10 +223,10 @@ export interface CalorimetryBench {
 export const ROOM_TEMP = 22;
 /** The bath can't get hotter than boiling water, °C. */
 export const BOILING_POINT = 100;
-/** Hot plate heating, °C/s, before losses to the room. */
-const HEATER_POWER = 2.5;
-/** Newton's-law loss to the room, per second. */
-const COOLING_RATE = 0.012;
+/** Newton's-law loss from the bath to the room, per second. Beaker experiments fit 0.04 to 0.07 per minute. */
+const COOLING_RATE = 0.001;
+/** The bath snaps to room temperature once this close with the plate off, °C. */
+const BATH_SETTLED_GAP = 0.1;
 /** The water starts to bubble a little from here, °C. */
 const SIMMER_FROM = 70;
 /** A lit sample takes this long to catch fully, s. */
@@ -235,21 +241,19 @@ const WATER_SPECIFIC_HEAT = 4.184;
  */
 const CAN_EFFICIENCY = 0.25;
 /** Newton's-law loss from the flask water to the room, per second. */
-const FLASK_COOLING_RATE = 0.002;
+const FLASK_COOLING_RATE = 0.001;
+/** The flask snaps to room temperature once this close with nothing burning, °C. */
+const FLASK_SETTLED_GAP = 0.05;
 /** The metal is dropped into the cold water of this station. */
 export const CUP_STATION = "coffee-cup-calorimeter";
-/** How fast the cup water closes on its final temperature, per second. */
-const CUP_SETTLE_RATE = 0.3;
+/** How fast cup water on its own drifts to its target, per second. With a metal in, the rate comes from the metal. */
+const CUP_DRIFT_RATE = 0.1;
 /** Below this gap the cup water counts as settled, °C. */
 const CUP_SETTLED_GAP = 0.05;
 /** The metal is heated in the beaker on this station. */
 export const BATH_STATION = "hot-water-bath";
-/** How fast the metal closes on the bath temperature while in it, per second. */
-const METAL_BATH_RATE = 0.25;
-/** How fast the metal loses heat to the room in air, per second. */
-const METAL_AIR_RATE = 0.004;
 /** Below this gap the metal counts as at its surroundings' temperature, °C. */
-const METAL_SETTLED_GAP = 0.005;
+const METAL_SETTLED_GAP = 0.05;
 /**
  * Steam only comes off the cup while the metal is hot enough to flash water
  * it touches: none below CUP_STEAM_FROM, full from CUP_STEAM_FULL, °C. A cold
@@ -269,6 +273,11 @@ const ASH_LOOK: MaterialLook = { color: "#2e2a27", metallic: 0, smoothness: 0.1 
 /** A sample's mass, g: the student's setting, or the one in its material table. */
 export function massOf(bench: CalorimetryBench, material: MaterialInfo): number {
   return bench.settings.masses[material.id] ?? material.massGrams;
+}
+
+/** Water in the beaker on the hot plate, g. */
+export function bathWaterGrams(bench: CalorimetryBench): number {
+  return bench.settings.bathWaterMl * WATER_GRAMS_PER_ML;
 }
 
 /** Water in the coffee cup, g. */
@@ -291,7 +300,7 @@ export function initialBench(settings: LabSettings = DEFAULT_LAB_SETTINGS): Calo
   return {
     placements: { metal: {}, biomass: {} },
     waterColor: "#9eccf28c",
-    beakerFill: 0.6,
+    beakerFill: fillFor(0.6, settings.bathWaterMl, DEFAULT_LAB_SETTINGS.bathWaterMl),
     flaskFill: fillFor(0.55, settings.flaskWaterMl, DEFAULT_LAB_SETTINGS.flaskWaterMl),
     heaterOn: false,
     bathTemp: ROOM_TEMP,
@@ -418,7 +427,9 @@ export function stepFlask(bench: CalorimetryBench, dt: number): CalorimetryBench
   const material = findMaterial(bench.burning);
   const heating = material ? heatIntoFlask(bench, material) / (flaskWaterGrams(bench) * WATER_SPECIFIC_HEAT) : 0;
   const rate = heating - FLASK_COOLING_RATE * (bench.flaskTemp - ROOM_TEMP);
-  const flaskTemp = Math.min(BOILING_POINT, Math.max(ROOM_TEMP, bench.flaskTemp + rate * dt));
+  const stepped = Math.min(BOILING_POINT, Math.max(ROOM_TEMP, bench.flaskTemp + rate * dt));
+  // Water cooling towards the room only ever approaches it, so it snaps once close.
+  const flaskTemp = !material && stepped - ROOM_TEMP < FLASK_SETTLED_GAP ? ROOM_TEMP : stepped;
   const next = { ...bench, flaskTemp, flaskMax: Math.max(bench.flaskMax, flaskTemp) };
 
   if (!material) return next;
@@ -465,10 +476,11 @@ function relax(temp: number, target: number, rate: number, dt: number, gap: numb
  * water. Without one, the water only drifts to its target.
  */
 export function stepCup(bench: CalorimetryBench, dt: number): CalorimetryBench {
-  const cupTemp = relax(bench.cupTemp, bench.cupTarget, CUP_SETTLE_RATE, dt, CUP_SETTLED_GAP);
   const metal = sampleAt(bench, "metal", CUP_STATION);
+  const rate = metal ? cupMeetingRate(bench, metal) : CUP_DRIFT_RATE;
+  const cupTemp = relax(bench.cupTemp, bench.cupTarget, rate, dt, CUP_SETTLED_GAP);
   if (!metal) return { ...bench, cupTemp };
-  const metalTemp = relax(metalTempOf(bench, metal.id), bench.cupTarget, CUP_SETTLE_RATE, dt, CUP_SETTLED_GAP);
+  const metalTemp = relax(metalTempOf(bench, metal.id), bench.cupTarget, rate, dt, CUP_SETTLED_GAP);
   return { ...bench, cupTemp, metalTemps: { ...bench.metalTemps, [metal.id]: metalTemp } };
 }
 
@@ -479,11 +491,26 @@ export function cupSettled(bench: CalorimetryBench): boolean {
   return !metal || metalTempOf(bench, metal.id) === bench.cupTarget;
 }
 
+/**
+ * How fast the cup water and the metal in it meet in the middle, per second.
+ * It comes from the metal's size and heat capacity and the stirred water
+ * around it, so a light metal of low specific heat gives its heat up faster.
+ */
+function cupMeetingRate(bench: CalorimetryBench, metal: MaterialInfo): number {
+  return meetingRate(
+    massOf(bench, metal),
+    metal.density ?? 7,
+    metal.specificHeat ?? 0.4,
+    H_CUP,
+    cupWaterGrams(bench) * WATER_SPECIFIC_HEAT,
+  );
+}
+
 /** What a metal outside the cup is closing on, °C, and how fast, per second. */
-function metalSurroundings(bench: CalorimetryBench, materialId: string): { temp: number; rate: number } {
-  return bench.placements.metal[BATH_STATION] === materialId
-    ? { temp: bench.bathTemp, rate: METAL_BATH_RATE }
-    : { temp: ROOM_TEMP, rate: METAL_AIR_RATE };
+function metalSurroundings(bench: CalorimetryBench, metal: MaterialInfo): { temp: number; rate: number } {
+  const inBath = bench.placements.metal[BATH_STATION] === metal.id;
+  const rate = filmRate(massOf(bench, metal), metal.density ?? 7, metal.specificHeat ?? 0.4, inBath ? H_BATH : H_AIR);
+  return { temp: inBath ? bench.bathTemp : ROOM_TEMP, rate };
 }
 
 /**
@@ -495,14 +522,14 @@ function metalSurroundings(bench: CalorimetryBench, materialId: string): { temp:
 export function stepMetal(bench: CalorimetryBench, dt: number): CalorimetryBench {
   const inCup = bench.placements.metal[CUP_STATION];
   let metalTemps = bench.metalTemps;
-  for (const { id } of METAL_MATERIALS) {
-    if (id === inCup) continue;
-    const { temp, rate } = metalSurroundings(bench, id);
-    const now = metalTempOf(bench, id);
+  for (const metal of METAL_MATERIALS) {
+    if (metal.id === inCup) continue;
+    const { temp, rate } = metalSurroundings(bench, metal);
+    const now = metalTempOf(bench, metal.id);
     const next = relax(now, temp, rate, dt, METAL_SETTLED_GAP);
     if (next === now) continue;
     if (metalTemps === bench.metalTemps) metalTemps = { ...metalTemps };
-    metalTemps[id] = next;
+    metalTemps[metal.id] = next;
   }
   return metalTemps === bench.metalTemps ? bench : { ...bench, metalTemps };
 }
@@ -511,7 +538,7 @@ export function stepMetal(bench: CalorimetryBench, dt: number): CalorimetryBench
 export function metalSettled(bench: CalorimetryBench): boolean {
   const inCup = bench.placements.metal[CUP_STATION];
   return METAL_MATERIALS.every(
-    ({ id }) => id === inCup || metalTempOf(bench, id) === metalSurroundings(bench, id).temp,
+    (metal) => metal.id === inCup || metalTempOf(bench, metal.id) === metalSurroundings(bench, metal).temp,
   );
 }
 
@@ -525,6 +552,17 @@ export function stepBench(bench: CalorimetryBench, dt: number): CalorimetryBench
   if (!flaskSettled(next)) next = stepFlask(next, dt);
   if (!cupSettled(next)) next = stepCup(next, dt);
   return stepMetal(next, dt);
+}
+
+/** The longest single step the physics takes, s, so a fast clock stays accurate. */
+const SUBSTEP_SECONDS = 0.5;
+
+/** Advances the bench by dt seconds in steps no longer than SUBSTEP_SECONDS. */
+export function advanceBench(bench: CalorimetryBench, dt: number): CalorimetryBench {
+  const steps = Math.max(1, Math.ceil(dt / SUBSTEP_SECONDS));
+  let next = bench;
+  for (let i = 0; i < steps; i++) next = stepBench(next, dt / steps);
+  return next;
 }
 
 /** True once nothing on the bench is changing, so its clock can stop. */
@@ -592,9 +630,12 @@ export function flameStrength(bench: CalorimetryBench): number {
  * it always loses heat to the room, and it holds at boiling once there.
  */
 export function stepBath(bench: CalorimetryBench, dt: number): CalorimetryBench {
-  const power = bench.heaterOn ? HEATER_POWER : 0;
-  const rate = power - COOLING_RATE * (bench.bathTemp - ROOM_TEMP);
-  const bathTemp = Math.min(BOILING_POINT, Math.max(ROOM_TEMP, bench.bathTemp + rate * dt));
+  // The plate's net power over the water's heat capacity: more water heats slower.
+  const heating = bench.heaterOn ? HEATER_NET_WATTS / (bathWaterGrams(bench) * WATER_SPECIFIC_HEAT) : 0;
+  const rate = heating - COOLING_RATE * (bench.bathTemp - ROOM_TEMP);
+  const stepped = Math.min(BOILING_POINT, Math.max(ROOM_TEMP, bench.bathTemp + rate * dt));
+  // Cooling only ever approaches the room's temperature, so the bath snaps once close.
+  const bathTemp = !bench.heaterOn && stepped - ROOM_TEMP < BATH_SETTLED_GAP ? ROOM_TEMP : stepped;
   return bathTemp === bench.bathTemp ? bench : { ...bench, bathTemp };
 }
 

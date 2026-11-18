@@ -22,6 +22,7 @@ const ALL_MATERIALS = [...METAL_MATERIALS, ...BIOMASS_MATERIALS];
 /** The text each field starts with for a set of settings. */
 function draftOf(settings: LabSettings): Draft {
   const draft: Draft = {
+    bathWaterMl: String(settings.bathWaterMl),
     cupWaterMl: String(settings.cupWaterMl),
     flaskWaterMl: String(settings.flaskWaterMl),
     cupColdTemp: String(settings.cupColdTemp),
@@ -45,6 +46,7 @@ function validate(draft: Draft): { settings: LabSettings; errors: Record<string,
   for (const material of ALL_MATERIALS) masses[material.id] = read(`mass:${material.id}`, SETTING_LIMITS.mass);
   const settings: LabSettings = {
     masses,
+    bathWaterMl: read("bathWaterMl", SETTING_LIMITS.bathWaterMl),
     cupWaterMl: read("cupWaterMl", SETTING_LIMITS.cupWaterMl),
     flaskWaterMl: read("flaskWaterMl", SETTING_LIMITS.flaskWaterMl),
     cupColdTemp: read("cupColdTemp", SETTING_LIMITS.cupColdTemp),
@@ -94,6 +96,7 @@ export default function SettingsPanel({ settings, onApply, onClose }: SettingsPa
 
       <fieldset className="flex flex-col gap-2">
         <legend className="mb-1 text-[10px] font-bold tracking-widest uppercase text-[var(--sim-label)]">Water</legend>
+        <NumberField label="Hot water bath" unit="mL" value={draft.bathWaterMl} onChange={set("bathWaterMl")} error={errors.bathWaterMl} />
         <NumberField label="Coffee cup water" unit="mL" value={draft.cupWaterMl} onChange={set("cupWaterMl")} error={errors.cupWaterMl} />
         <NumberField label="Flask water" unit="mL" value={draft.flaskWaterMl} onChange={set("flaskWaterMl")} error={errors.flaskWaterMl} />
         <NumberField label="Cup water start" unit="°C" value={draft.cupColdTemp} onChange={set("cupColdTemp")} error={errors.cupColdTemp} />

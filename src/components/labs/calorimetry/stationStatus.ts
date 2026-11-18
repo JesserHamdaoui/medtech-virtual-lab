@@ -1,3 +1,4 @@
+import { HEATER_WATTS } from "./heatTransfer";
 import {
   BOILING_POINT,
   CUP_STATION,
@@ -69,7 +70,11 @@ function bathStatus(bench: CalorimetryBench): StationStatus {
   else if (boiling && level) instruction = "The metal has reached the bath temperature. Move it to the coffee cup.";
   else instruction = "Wait until the bath boils and the metal reaches its temperature.";
 
-  const stats: DockStat[] = [{ label: "Room", value: celsius(ROOM_TEMP) }];
+  const stats: DockStat[] = [
+    { label: "Water", value: `${bench.settings.bathWaterMl} mL` },
+    { label: "Heater", value: `${HEATER_WATTS} W` },
+    { label: "Room", value: celsius(ROOM_TEMP) },
+  ];
   if (metal) stats.unshift({ label: metal.label, value: celsius(metalTempOf(bench, metal.id)) });
 
   return {

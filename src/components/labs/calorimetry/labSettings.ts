@@ -6,6 +6,8 @@
 export interface LabSettings {
   /** Sample masses, g, by material id. A sample missing here keeps the mass in its material table. */
   masses: Record<string, number>;
+  /** Water in the beaker on the hot plate, mL. */
+  bathWaterMl: number;
   /** Cold water in the coffee cup, mL. */
   cupWaterMl: number;
   /** Water in the flask on the tin can, mL. */
@@ -16,6 +18,7 @@ export interface LabSettings {
 
 export const DEFAULT_LAB_SETTINGS: LabSettings = {
   masses: {},
+  bathWaterMl: 250,
   cupWaterMl: 20,
   flaskWaterMl: 100,
   cupColdTemp: 10,
@@ -32,6 +35,7 @@ export interface Limits {
 /** What each setting may be set to. */
 export const SETTING_LIMITS = {
   mass: { min: 0.1, max: 100 },
+  bathWaterMl: { min: 100, max: 500 },
   cupWaterMl: { min: 5, max: 200 },
   flaskWaterMl: { min: 20, max: 300 },
   cupColdTemp: { min: 0, max: 20 },
