@@ -96,15 +96,15 @@ export interface MaterialInfo {
   residueFraction?: number;
 }
 
-// The three metal samples are the same size puck, so their masses follow
-// their densities (Zn 7.14, Al 2.70, Sn 7.27 g/cm³).
+// Every metal sample starts at 5 g and every biomass sample at 2 g. The
+// settings panel can change them.
 export const METAL_MATERIALS: MaterialInfo[] = [
   {
     id: "zinc",
     label: "Zinc (Zn)",
     icon: "/images/calorimetry/zinc.png",
     look: { color: "#8f9ba6", metallic: 0.6, smoothness: 0.55 },
-    massGrams: 26.48,
+    massGrams: 5,
     specificHeat: 0.388,
   },
   {
@@ -112,7 +112,7 @@ export const METAL_MATERIALS: MaterialInfo[] = [
     label: "Aluminum (Al)",
     icon: "/images/calorimetry/aluminum.png",
     look: { color: "#d6dadf", metallic: 0.5, smoothness: 0.6 },
-    massGrams: 10.01,
+    massGrams: 5,
     specificHeat: 0.897,
   },
   {
@@ -120,7 +120,7 @@ export const METAL_MATERIALS: MaterialInfo[] = [
     label: "Tin (Sn)",
     icon: "/images/calorimetry/tin.png",
     look: { color: "#b8b2a3", metallic: 0.55, smoothness: 0.45 },
-    massGrams: 26.96,
+    massGrams: 5,
     specificHeat: 0.227,
   },
 ];
@@ -131,7 +131,7 @@ export const BIOMASS_MATERIALS: MaterialInfo[] = [
     label: "Wood Chips / Splints",
     icon: "/images/calorimetry/wood-chips.png",
     look: { color: "#ffffff", metallic: 0, smoothness: 0.25 },
-    massGrams: 2.35,
+    massGrams: 2,
     heatOfCombustion: 18,
     burnSeconds: 40,
     residueFraction: 0.12,
@@ -141,7 +141,7 @@ export const BIOMASS_MATERIALS: MaterialInfo[] = [
     label: "Dried Grass / Corn Stalks",
     icon: "/images/calorimetry/dried-grass.png",
     look: { color: "#ffffff", metallic: 0, smoothness: 0.2 },
-    massGrams: 1.84,
+    massGrams: 2,
     heatOfCombustion: 16,
     burnSeconds: 25,
     residueFraction: 0.08,
